@@ -44,8 +44,10 @@ const CartPage = () => {
             const response = await axios.post('http://localhost:9000/payment/create-checkout-session', {
                 cartItems: cartItems,
                 totalAmount: calculateTotalPrice(),
+                
             });
-
+            window.open(response.data.url);
+            // console.log(" %s", response.url );
             // const session = response.data;
 
             // const { error, paymentMethod } = await stripe.createPaymentMethod({
@@ -72,7 +74,8 @@ const CartPage = () => {
             //     // Payment successful, proceed with order completion
             // }
         } catch (error) {
-            console.log(error.message);
+            console.log("hi")
+            console.log( error.message);
             // Handle error
         }
     };

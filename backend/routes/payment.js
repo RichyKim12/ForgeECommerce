@@ -1,5 +1,3 @@
-
-
 const express = require('express');
 const router = express.Router();
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
@@ -25,7 +23,8 @@ router.post('/create-checkout-session', async (req, res) => {
             cancel_url: 'http://localhost:3000/cancel', // Replace with your cancel URL
 
         });
-        res.redirect(303, session.url);
+        // res.json(303, session.url);
+        res.json({ url: session.url })
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'An error occurred while creating the checkout session.' });
