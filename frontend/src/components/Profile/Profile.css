@@ -87,3 +87,8 @@
 .profilePage-products-list-item-description {
     color: black;
 }
+
+.profilePage-products-list-item-img {
+    max-width: 20rem;
+    max-height: 20rem;
+}

@@ -12,12 +12,16 @@ import { RouteLocations } from "../../RouteLocations";
 import axios from "axios";
 // mui
 import {
-  Button,
   Dialog,
-  DialogActions,
-  DialogContent,
   DialogTitle,
+  DialogContent,
+  DialogActions,
   TextField,
+  FormControl,
+  Select,
+  MenuItem,
+  Button,
+  Input,
 } from "@mui/material";
 
 export default function Profile() {
@@ -28,25 +32,47 @@ export default function Profile() {
   const [newProductName, setNewProductName] = useState("");
   const [newProductDescription, setNewProductDescription] = useState("");
   const [newProductPrice, setNewProductPrice] = useState(0);
+  const [newProductImage, setNewProductImage] = useState(null);
+  const [newProductCategory, setNewProductCategory] = useState("");
+  const [displayErrorPopup, setDisplayErrorPopup] = useState(false);
 
   const handleAddNewProduct = async () => {
+    const formData = new FormData();
+    formData.append("file", newProductImage);
+    formData.append("name", newProductName);
+    formData.append("description", newProductDescription);
+    formData.append("price", newProductPrice);
+    formData.append("creator_uid", user.uid);
+    if (newProductImage) {
+      formData.append("fileName", newProductImage.name);
+    }
+
+    // ensure that all fields are filled out
+    if (
+      newProductName.trim() === "" ||
+      newProductDescription.trim() === "" ||
+      newProductPrice === 0 ||
+      newProductImage === null ||
+      newProductCategory === ""
+    ) {
+      setDisplayErrorPopup(true);
+      return;
+    }
 
     try {
-        const response = await axios.post("http://localhost:9000/firestore/add-product", {
-            name: newProductName,
-            description: newProductDescription,
-            price: newProductPrice,
-            creator_uid: user.uid
-        })
+      const response = await axios.post(
+        "http://localhost:9000/firestore/add-product",
+        formData
+      );
     } catch (error) {
-        console.log(error);
+      console.log(error);
     } finally {
-        setOpenNewProductModal(false);
-        setNewProductDescription("");
-        setNewProductName("");
-        setNewProductPrice(0);
+      setOpenNewProductModal(false);
+      setNewProductDescription("");
+      setNewProductName("");
+      setNewProductPrice(0);
     }
-  }
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -75,6 +101,29 @@ export default function Profile() {
     return <div>Loading...</div>;
   }
 
+  const productCategoriesArray = [
+    "smartphones",
+    "laptops",
+    "fragrances",
+    "skincare",
+    "groceries",
+    "home-decoration",
+    "furniture",
+    "tops",
+    "womens-dresses",
+    "womens-shoes",
+    "mens-shirts",
+    "mens-shoes",
+    "mens-watches",
+    "womens-watches",
+    "womens-bags",
+    "womens-jewellery",
+    "sunglasses",
+    "automotive",
+    "motorcycle",
+    "lighting",
+  ];
+
   return (
     <div className="profilePage">
       <div className="profilePage-content">
@@ -95,6 +144,24 @@ export default function Profile() {
             New Product
           </button>
         </div>
+        {/* error popup */}
+        <Dialog
+          open={displayErrorPopup}
+          onClose={() => setDisplayErrorPopup(false)}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Error"}</DialogTitle>
+          <DialogContent>
+            <DialogContent id="alert-dialog-description">
+              Please fill out all fields properly.
+            </DialogContent>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setDisplayErrorPopup(false)}>Close</Button>
+          </DialogActions>
+        </Dialog>
+
         <Dialog
           open={openNewProductModal}
           onClose={() => setOpenNewProductModal(false)}
@@ -138,6 +205,38 @@ export default function Profile() {
                 setNewProductDescription(e.target.value);
               }}
             />
+            {/* dropdown for categories */}
+            <FormControl fullWidth>
+              <Select
+                value={newProductCategory}
+                onChange={(e) => {
+                  setNewProductCategory(e.target.value);
+                }}
+                displayEmpty
+                inputProps={{
+                  name: "category",
+                  id: "category",
+                }}
+              >
+                <MenuItem value="" disabled>
+                  Select Category
+                </MenuItem>
+                {productCategoriesArray.map((category, index) => {
+                  return (
+                    <MenuItem key={index} value={category}>
+                      {category}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+
+            <Input
+              type="file"
+              onChange={(e) => {
+                setNewProductImage(e.target.files[0]);
+              }}
+            />
           </DialogContent>
           <DialogActions>
             <Button onClick={() => setOpenNewProductModal(false)}>
@@ -160,6 +259,7 @@ export default function Profile() {
                 <p className="profilePage-products-list-item-description">
                   {product.description}
                 </p>
+                <img src={product.image_url} alt={product.name} className="profilePage-products-list-item-img" />
               </div>
             );
           })}

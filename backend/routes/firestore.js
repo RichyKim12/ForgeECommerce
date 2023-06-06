@@ -3,6 +3,21 @@
 var express = require("express");
 var router = express.Router();
 const db = require('../firebase');
+const axios = require('axios');
+const fs = require('fs');
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+const AWS = require("aws-sdk");
+require("dotenv").config();
+const region = "us-east-2";
+
+// AWS S3 credentials
+AWS.config.update({ region: "us-east-2" });
+
+const s3 = new AWS.S3({
+    accessKeyId: process.env.AWS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_KEY,
+});
 
 const {
   collection,
@@ -72,11 +87,42 @@ router.get("/get-product-by-name/:name", async function (req, res, next) {
 });
 
 // POST request to add a new product
-router.post("/add-product", async function (req, res, next) {
+router.post("/add-product", upload.single('file'), async function (req, res, next) {
     try {
+        // gets the image from the form data
+        const image = req.file;
+        // gets the rest of the data from the form data
+        const {name, description, price, creator_uid, fileName} = req.body;
+        // creates upload params
+        const uploadParams = {
+            Bucket: "forge-swe2023-week3-ecommerce-bucket",
+            Key: "product-images/" + fileName,
+            Body: fs.readFileSync(image.path),
+        }
+
+        // upload to s3
+        s3.upload(uploadParams, function (err, data) {
+            if (err) {
+                console.log("Error", err);
+            } if (data) {
+                console.log("Upload Success", data.Location);
+            }
+        })
+
+        // add the product to the firestore
         const productsRef = collection(db, "products");
-        const newProductRef = await addDoc(productsRef, req.body);
-        res.send(newProductRef.id);
+        const newProductRef = await addDoc(productsRef, {
+            name: name,
+            description: description,
+            price: price,
+            creator_uid: creator_uid,
+            image_url: "https://forge-swe2023-week3-ecommerce-bucket.s3.us-east-2.amazonaws.com/product-images/" + fileName
+        });
+        res.send("Product added with ID: " + newProductRef.id);
+
+
+
+
     } catch (error) {
         res.status(500).send("Error adding product");
     }
