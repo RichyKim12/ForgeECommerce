@@ -7,7 +7,7 @@ var cors = require('cors');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var bucketRouter = require('./routes/bucket');
-
+require("dotenv").config();
 var app = express();
 app.use(cors());
 

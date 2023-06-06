@@ -3,13 +3,14 @@
 var express = require('express');
 var router = express.Router();
 const AWS = require('aws-sdk');
+require("dotenv").config();
 
 // AWS S3 credentials
 AWS.config.update({region: 'us-east-2'})
 
 const s3 = new AWS.S3({
-    // accessKeyId: "AKIAZQLFMQA3ISUBLI4D",
-    // secretAccessKey: "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"
+    accessKeyId: process.env.AWS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_KEY
 })
 
 
