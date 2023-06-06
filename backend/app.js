@@ -10,10 +10,20 @@ var usersRouter = require('./routes/users');
 var paymentRouter = require('./routes/payment');
 var bucketRouter = require('./routes/bucket');
 var firestoreRouter = require('./routes/firestore');
+//Routes
+
+var productUploadRouter = require("./routes/ProductUpload");
 require("dotenv").config();
 
 var app = express();
 app.use(cors());
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+  next();
+ });
 
 
 
@@ -43,6 +53,17 @@ app.use(function (req, res, next) {
   next();
 });
 
+// Additional CORS headers for redirect request
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', 'https://checkout.stripe.com');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
+app.use('/bucket', bucketRouter);
+app.use("/productupload", productUploadRouter);
+app.use('/firestore', firestoreRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

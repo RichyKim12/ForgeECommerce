@@ -148,12 +148,12 @@ const NavigationBar = () => {
               </Button>
               <Button
                 component={RouterLink}
-                to="/checkout"
+                to="/cart"
                 color="inherit"
                 sx={{ marginRight: "12px" }}
               >
                 <StyledShoppingCartIcon
-                  className={location.pathname === "/checkout" ? "active" : ""}
+                  className={location.pathname === "/cart" ? "active" : ""}
                   fontSize="large"
                 />
               </Button>
@@ -169,7 +169,7 @@ const NavigationBar = () => {
         <Drawer
           PaperProps={{
             sx: {
-              backgroundColor: "#e4eef6",
+              backgroundColor: "#606C38",
             },
           }}
           anchor="right"
@@ -183,9 +183,15 @@ const NavigationBar = () => {
                 className={location.pathname === "/" ? "active" : ""}
               />
             </ListItem>
-            <ListItem component={RouterLink} to="/checkout">
+            <ListItem  component={RouterLink} to="/newproduct">
+              <StyledStorefrontIcon
+                className={location.pathname === "/newproduct" ? "active" : ""}
+                fontSize="large"
+              />
+            </ListItem>
+            <ListItem  component={RouterLink} to="/cart">
               <StyledShoppingCartIcon
-                className={location.pathname === "/checkout" ? "active" : ""}
+                className={location.pathname === "/cart" ? "active" : ""}
                 fontSize="large"
               />
             </ListItem>

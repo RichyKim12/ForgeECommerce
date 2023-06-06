@@ -1,0 +1,23 @@
+.fileUploadContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+.itemNameContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.itemDescriptionContainer{
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.submit-button{
+    display: flex;
+    justify-content: center;
+    margin: 1.5REM;
+      
+}
