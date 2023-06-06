@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var paymentRouter = require('./routes/payment');
 var bucketRouter = require('./routes/bucket');
+var firestoreRouter = require('./routes/firestore');
 require("dotenv").config();
 
 var app = express();
@@ -49,6 +50,7 @@ app.use(function (req, res, next) {
 });
 
 app.use('/bucket', bucketRouter);
+app.use('/firestore', firestoreRouter);
 
 
 // catch 404 and forward to error handler
