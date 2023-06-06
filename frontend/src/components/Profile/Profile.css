@@ -1,0 +1,89 @@
+.profilePage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+}
+
+.profilePage-content {
+    padding: 0.5rem 3rem;
+    border: 1px solid black;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+}
+
+.profilePage-content-info-text {
+    font-style: italic;
+}
+
+.profilePage-products {
+    width: 100%;
+    height: 100%;
+    
+}
+
+.profilePage-products-titleWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 1rem;
+}
+
+.profilePage-products-title {
+    text-align: left;
+}
+
+.profilePage-products-newProductButton {
+    padding: 0.75rem 2rem;
+    border: 1px solid white;
+    border-radius: 12px;
+    background-color:#BC6C25;
+    color: white;
+    font-size: 1rem;
+        transition: 0.2s ease-in-out;
+
+}
+
+.profilePage-products-newProductButton:hover {
+    background-color: white;
+    cursor: pointer;
+    color: #BC6C25;
+    border: 1px solid #BC6C25;
+    transition: 0.2s ease-in-out;
+}
+
+.profilePage-products-list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 1rem;
+}
+
+.profilePage-products-list-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0.5rem;
+}
+
+.profilePage-products-list-item-name {
+    color: black;
+}
+
+.profilePage-products-list-item-price {
+    color: black;
+}
+
+.profilePage-products-list-item-description {
+    color: black;
+}

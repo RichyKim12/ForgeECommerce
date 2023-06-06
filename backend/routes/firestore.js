@@ -82,6 +82,25 @@ router.post("/add-product", async function (req, res, next) {
     }
 });
 
+// GET request to get all products by the creator uid
+router.get("/get-products-by-creator-uid/:uid", async function (req, res, next) {
+    // returns an array of products made by the user
+    try {
+        const productsRef = collection(db, "products");
+        const productsSnapshot = await getDocs(productsRef);
+        const productsList = productsSnapshot.docs.map((doc) => {
+            return {
+                id: doc.id,
+                ...doc.data(),
+            };
+        });
+        const productsByUser = productsList.filter((product) => product.creator_uid === req.params.uid);
+        res.send(productsByUser);
+    } catch (error) {
+        res.status(500).send("Error retrieving products");
+    }
+});
+
 // PUT request to update a product by id
 router.put("/update-product-by-id/:id", async function (req, res, next) {
     try {
