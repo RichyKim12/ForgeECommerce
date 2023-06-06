@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import Button from "@mui/material/Button";
-// import axios from "axios";
+import axios from "axios";
 import "./NewProduct.css";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -38,13 +38,22 @@ function NewProduct() {
   // 1. Creates dummy product and retrieves id and all that from DummyNode API
   // 2. Add it to firebase backend
   const fileUploadHandler=(e)=>{
-    console.log(selectedImage)
-    console.log(itemName)
-    console.log(itemDescription)
+    e.preventDefault()
+    const formData = new FormData()
+    formData.append('image', selectedImage)
+    formData.append('itemName', itemName);
+    formData.append('itemDescription', itemDescription);
+    axios.post("http://localhost:9000/ProductUpload", formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
   }
+  const formRef = React.useRef();
 
   
-  // TODO: Fix CSS stuff later
+  // TODO: Fix CSS stuff later,
+  // TODO: Make form unsubmittable if any fields are empty (useStates?)
   // Need to display a form that takes necessary info:
   // 1. Name
   // 2. Price
@@ -54,7 +63,7 @@ function NewProduct() {
     <>
       
       <h1>Upload a New Product</h1>
-      <form onSubmit={fileUploadHandler}>
+      <form ref = {formRef}onSubmit={fileUploadHandler}>
       {/* Item Description */}
       <div className= "itemNameContainer">
           <Box style={{ width: "250px" }}>
@@ -114,6 +123,10 @@ function NewProduct() {
         <div className = "submit-button">
           <ThemeProvider theme={theme}>
             <Button variant="contained" onClick={fileUploadHandler} size="large">
+            {/* <Button
+              variant="contained"
+              onClick={() => formRef.current.reportValidity()}
+            > */}
               Login
             </Button>
           </ThemeProvider>
