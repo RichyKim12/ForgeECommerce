@@ -26,7 +26,7 @@ function NewProduct() {
   const [selectedImage, setSelectedImage] = useState('')
   const [itemName, setItemName] = useState('')
   const [itemDescription, setItemDescription] = useState('')
-
+  const formRef = React.useRef();
   const fileSelectHandler=(e)=> {
     console.log(e.target.files[0])
     setSelectedImage(e.target.files[0])  
@@ -35,10 +35,8 @@ function NewProduct() {
 
 
   // Does two things
-  // 1. Creates dummy product and retrieves id and all that from DummyNode API
-  // 2. Add it to firebase backend
-  const fileUploadHandler=(e)=>{
-    e.preventDefault()
+  // 1. Add it to firebase backend
+  const fileUploadHandler=()=>{
     const formData = new FormData()
     formData.append('image', selectedImage)
     formData.append('itemName', itemName);
@@ -49,7 +47,14 @@ function NewProduct() {
       }
     })
   }
-  const formRef = React.useRef();
+
+  const handleSubmit = (e) =>{
+    e.preventDefault()
+    if (formRef.current.reportValidity()) {
+      fileUploadHandler();
+    }
+  }
+  
 
   
   // TODO: Fix CSS stuff later,
@@ -122,7 +127,7 @@ function NewProduct() {
 
         <div className = "submit-button">
           <ThemeProvider theme={theme}>
-            <Button variant="contained" onClick={fileUploadHandler} size="large">
+            <Button variant="contained" onClick={handleSubmit} size="large">
             {/* <Button
               variant="contained"
               onClick={() => formRef.current.reportValidity()}

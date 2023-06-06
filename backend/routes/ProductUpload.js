@@ -7,7 +7,7 @@ const multer =  require('multer')
 const upload = multer();
 
 
-// This will make dummy node
+// Upload this to database
 router.post('/', upload.single('image'), (req, res)=> {
     const {itemName, itemDescription} = req.body
     const image = req.file
