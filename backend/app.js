@@ -16,6 +16,7 @@ var app = express();
 app.use(cors());
 
 
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -30,27 +31,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
 app.use('/payment', paymentRouter);
+app.use('/bucket', bucketRouter);
+app.use('/firestore', firestoreRouter);
 
 // Set CORS headers for all routes
 app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Origin', ['http://localhost:3000', 'https://checkout.stripe.com']);
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
-
-// Additional CORS headers for redirect request
-app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', 'https://checkout.stripe.com');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-});
-
-app.use('/bucket', bucketRouter);
-app.use('/firestore', firestoreRouter);
 
 
 // catch 404 and forward to error handler
