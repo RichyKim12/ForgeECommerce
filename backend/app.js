@@ -24,7 +24,8 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
   next();
  });
- 
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -40,12 +41,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
 app.use('/payment', paymentRouter);
+app.use('/bucket', bucketRouter);
+app.use('/firestore', firestoreRouter);
 
 // Set CORS headers for all routes
 app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Origin', ['http://localhost:3000', 'https://checkout.stripe.com']);
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   next();
