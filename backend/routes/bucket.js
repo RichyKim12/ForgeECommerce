@@ -8,8 +8,8 @@ const AWS = require('aws-sdk');
 AWS.config.update({region: 'us-east-2'})
 
 const s3 = new AWS.S3({
-    accessKeyId: "AKIAZQLFMQA3ISUBLI4D",
-    secretAccessKey: "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"
+    // accessKeyId: "AKIAZQLFMQA3ISUBLI4D",
+    // secretAccessKey: "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"
 })
 
 
