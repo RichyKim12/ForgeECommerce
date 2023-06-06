@@ -170,7 +170,7 @@ const NavigationBar = () => {
         <Drawer
           PaperProps={{
             sx: {
-              backgroundColor: "#e4eef6",
+              backgroundColor: "#606C38",
             },
           }}
           anchor="right"
@@ -178,10 +178,16 @@ const NavigationBar = () => {
           onClose={toggleDrawer}
         >
           <List sx={{ width: 150 }} onClick={toggleDrawer}>
-            <ListItem  component={RouterLink} to="/">
+            <ListItem component={RouterLink} to="/">
               <StyledHomeIcon
                 fontSize="large"
                 className={location.pathname === "/" ? "active" : ""}
+              />
+            </ListItem>
+            <ListItem  component={RouterLink} to="/newproduct">
+              <StyledStorefrontIcon
+                className={location.pathname === "/newproduct" ? "active" : ""}
+                fontSize="large"
               />
             </ListItem>
             <ListItem  component={RouterLink} to="/checkout">
