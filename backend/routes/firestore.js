@@ -177,14 +177,54 @@ router.get("/get-user-by-id/:id", async function (req, res, next) {
 
 // POST request to add a new user
 router.post("/add-user", async function (req, res, next) {
+    // first check if the user already exists, if so, return 202 status code
+    // const usersRef = collection(db, "users");
+    // const usersSnapshot = await getDocs(usersRef);
+    // const usersList = usersSnapshot.docs.map((doc) => {
+    //     return {
+    //         id: doc.id,
+    //         ...doc.data(),
+    //     };
+    // });
+
+    // const user = usersList.find((user) => user.uid === req.body.uid);
+    // if (user) {
+    //     res.status(202).send("User already exists");
+    // }
+    
+
     try {
         const usersRef = collection(db, "users");
         const newUserRef = await addDoc(usersRef, req.body);
+        
         res.send(newUserRef.id);
     } catch (error) {
         res.status(500).send("Error adding user");
     }
 });
+
+// GET request to see if a user exists
+router.get("/user-exists/:uid", async function (req, res, next) {
+    try {
+        const usersRef = collection(db, "users");
+        const usersSnapshot = await getDocs(usersRef);
+        const usersList = usersSnapshot.docs.map((doc) => {
+            return {
+                id: doc.id,
+                ...doc.data(),
+            };
+        });
+        const user = usersList.find((user) => user.uid === req.params.uid);
+        if (user) {
+            res.send(true);
+        } else {
+            res.send(false);
+        }
+    } catch (error) {
+        res.status(500).send("Error retrieving user");
+    }
+});
+
 
 
 
