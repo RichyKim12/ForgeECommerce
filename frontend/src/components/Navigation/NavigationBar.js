@@ -148,12 +148,12 @@ const NavigationBar = () => {
               </Button>
               <Button
                 component={RouterLink}
-                to="/checkout"
+                to="/cart"
                 color="inherit"
                 sx={{ marginRight: "12px" }}
               >
                 <StyledShoppingCartIcon
-                  className={location.pathname === "/checkout" ? "active" : ""}
+                  className={location.pathname === "/cart" ? "active" : ""}
                   fontSize="large"
                 />
               </Button>
@@ -189,9 +189,9 @@ const NavigationBar = () => {
                 fontSize="large"
               />
             </ListItem>
-            <ListItem  component={RouterLink} to="/checkout">
+            <ListItem  component={RouterLink} to="/cart">
               <StyledShoppingCartIcon
-                className={location.pathname === "/checkout" ? "active" : ""}
+                className={location.pathname === "/cart" ? "active" : ""}
                 fontSize="large"
               />
             </ListItem>
