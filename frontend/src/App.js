@@ -6,6 +6,7 @@ import Browse from './components/Browse/Browse';
 import NewProduct from './components/NewProduct/NewProduct';
 import NavigationBar from './components/Navigation/NavigationBar';
 import Profile from './components/Profile/Profile';
+import Login from './components/Login/Login';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/newproduct" element={<NewProduct />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
       
