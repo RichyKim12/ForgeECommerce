@@ -77,7 +77,7 @@ function NewProduct() {
               name="item name"
               type="text"
               required
-              label= "Item Name"
+              label= "Product Name"
               fullWidth
               sx={{
                 fieldset: { borderColor: "#000000" }
@@ -85,58 +85,54 @@ function NewProduct() {
               onChange={(e) => setItemName(e.target.value)}
             />
           </Box>
-        </div>
+      </div>
 
-        {/* Item Description */}
-        <div className = "itemDescriptionContainer">
-          <Box style={{ width: "320px" }}>
-            <TextField
-              variant="outlined"
-              name="item description"
-              type="text"
-              multiline
-              required
-              label= "Item Description"
-              fullWidth
-              rows = {6}
+      {/* Item Description */}
+      <div className = "itemDescriptionContainer">
+        <Box style={{ width: "320px" }}>
+          <TextField
+            variant="outlined"
+            name="item description"
+            type="text"
+            multiline
+            required
+            label= "Item Description"
+            fullWidth
+            rows = {6}
 
-              sx={{
-                fieldset: { borderColor: "#000000" }
-              }}
-              onChange={(e) => setItemDescription(e.target.value)}
-            />
-          </Box>
-        </div>
+            sx={{
+              fieldset: { borderColor: "#000000" }
+            }}
+            onChange={(e) => setItemDescription(e.target.value)}
+          />
+        </Box>
+      </div>
 
-        {/* File Upload */}
-        <div className = "fileUploadContainer">
-          <Box style={{ width: "250px" }}>
-            <TextField
-              variant="outlined"
-              id="Spotify-email-address"
-              type="file"
-              required
-              fullWidth
-              
-              sx={{
-                fieldset: { borderColor: "#000000" }
-              }}
-              onChange={fileSelectHandler}
-            />
-          </Box>
-        </div>
+      {/* File Upload */}
+      <div className = "fileUploadContainer">
+        <Box style={{ width: "250px" }}>
+          <TextField
+            variant="outlined"
+            id="Spotify-email-address"
+            type="file"
+            required
+            fullWidth
+            
+            sx={{
+              fieldset: { borderColor: "#000000" }
+            }}
+            onChange={fileSelectHandler}
+          />
+        </Box>
+      </div>
 
-        <div className = "submit-button">
-          <ThemeProvider theme={theme}>
-            <Button variant="contained" onClick={handleSubmit} size="large">
-            {/* <Button
-              variant="contained"
-              onClick={() => formRef.current.reportValidity()}
-            > */}
-              Login
-            </Button>
-          </ThemeProvider>
-        </div>
+      <div className = "submit-button">
+        <ThemeProvider theme={theme}>
+          <Button variant="contained" onClick={handleSubmit} size="large">
+            Submit
+          </Button>
+        </ThemeProvider>
+      </div>
         
       </form>
     </>
