@@ -1,8 +1,17 @@
 import React from 'react'
 
 function NewProduct() {
+  const fileSelectHandler = (event) =>{
+    console.log(event)
+  }
+
   return (
-    <div>NewProduct</div>
+    <>
+     <input type = "file" onClick={fileSelectHandler}>
+      
+     </input>
+    </>
+
   )
 }
 
