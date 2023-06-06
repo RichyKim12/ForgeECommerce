@@ -11,10 +11,14 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import HomeIcon from "@mui/icons-material/Home";
-import { createTheme} from "@mui/material/styles";
-import StorefrontIcon from '@mui/icons-material/Storefront';
+import { createTheme } from "@mui/material/styles";
+import StorefrontIcon from "@mui/icons-material/Storefront";
+// firebase
+import { auth, db } from "../../firebase";
+// axios
+import axios from "axios";
 
 const theme = createTheme({
   palette: {
@@ -52,10 +56,6 @@ const StyledHomeIcon = styled(HomeIcon)(({ theme }) => ({
   },
 }));
 
-
-
-
-
 const StyledAccountBoxIcon = styled(AccountBoxIcon)(({ theme }) => ({
   color: "#FEFAE0",
   "&:hover": {
@@ -79,7 +79,6 @@ const NavigationBar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const location = useLocation();
- 
 
   useEffect(() => {
     const handleResize = () => {
@@ -110,7 +109,7 @@ const NavigationBar = () => {
             component="div"
             sx={{ color: "black", flexGrow: 1, textAlign: "left" }}
           >
-          {/* <p><small>placeholder</small></p> */}
+            {/* <p><small>placeholder</small></p> */}
           </Typography>
           {isMobile ? (
             <IconButton
@@ -141,7 +140,9 @@ const NavigationBar = () => {
                 sx={{ marginRight: "12px" }}
               >
                 <StyledStorefrontIcon
-                  className={location.pathname === "/newproduct" ? "active" : ""}
+                  className={
+                    location.pathname === "/newproduct" ? "active" : ""
+                  }
                   fontSize="large"
                 />
               </Button>
@@ -156,14 +157,12 @@ const NavigationBar = () => {
                   fontSize="large"
                 />
               </Button>
-              <Button component={RouterLink} to="/profile" color="inherit">
+              <Button color="inherit" component={RouterLink} to="/profile">
                 <StyledAccountBoxIcon
                   className={location.pathname === "/profile" ? "active" : ""}
                   fontSize="large"
                 />
               </Button>
-             
-              
             </div>
           )}
         </Toolbar>
@@ -196,7 +195,7 @@ const NavigationBar = () => {
                 fontSize="large"
               />
             </ListItem>
-            <ListItem  component={RouterLink} to="/profile">
+            <ListItem component={RouterLink} to="/profile">
               <StyledAccountBoxIcon
                 className={location.pathname === "/profile" ? "active" : ""}
                 fontSize="large"
@@ -206,12 +205,9 @@ const NavigationBar = () => {
               style={{ paddingLeft: 6 }}
               component={RouterLink}
               to="/"
-            >
-             
-            </ListItem>
+            ></ListItem>
           </List>
         </Drawer>
-        
       </AppBar>
       <Toolbar />
     </>
