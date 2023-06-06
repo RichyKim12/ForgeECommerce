@@ -117,6 +117,7 @@ function NewProduct() {
               type="file"
               required
               fullWidth
+              
               sx={{
                 fieldset: { borderColor: "#000000" }
               }}
