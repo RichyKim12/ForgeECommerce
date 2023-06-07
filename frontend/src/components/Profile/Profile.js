@@ -22,7 +22,13 @@ import {
   MenuItem,
   Button,
   Input,
+  IconButton,
+  Icon,
 } from "@mui/material";
+// log out icon from mui
+import LogoutIcon from "@mui/icons-material/Logout";
+// components
+import ProfileProductCard from "./ProfileProductCard";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -124,12 +130,24 @@ export default function Profile() {
     "lighting",
   ];
 
+  // cahnge
+
   return (
     <div className="profilePage">
       <div className="profilePage-content">
         <h1 className="profilePage-content-title">
           Profile for {user.displayName}
         </h1>
+        {/* log out icon */}
+        <IconButton>
+          <LogoutIcon
+            className="profilePage-content-logoutIcon"
+            onClick={() => {
+              auth.signOut();
+            }}
+          />
+        </IconButton>
+
         <div className="profilePage-content-info">
           <p className="profilePage-content-info-text">{user.email}</p>
         </div>
@@ -249,18 +267,14 @@ export default function Profile() {
         <div className="profilePage-products-list">
           {products.map((product, index) => {
             return (
-              <div className="profilePage-products-list-item" key={index}>
-                <p className="profilePage-products-list-item-name">
-                  {product.name}
-                </p>
-                <p className="profilePage-products-list-item-price">
-                  {product.price}
-                </p>
-                <p className="profilePage-products-list-item-description">
-                  {product.description}
-                </p>
-                <img src={product.image_url} alt={product.name} className="profilePage-products-list-item-img" />
-              </div>
+              <ProfileProductCard
+                key={index}
+                title={product.name}
+                price={product.price}
+                description={product.description}
+                image={product.image_url}
+                category={product.category}
+              />
             );
           })}
         </div>
