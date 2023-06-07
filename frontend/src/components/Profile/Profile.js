@@ -133,6 +133,8 @@ export default function Profile() {
     "lighting",
   ];
 
+  // cahnge
+
   return (
     <div className="profilePage">
       <div className="profilePage-content">
