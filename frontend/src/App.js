@@ -24,6 +24,7 @@ function App() {
         </Routes>
       </BrowserRouter>
       
+      <footer>  @Copyright 2023   </footer>
 
     </div>
   )
