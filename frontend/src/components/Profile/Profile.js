@@ -52,7 +52,6 @@ export default function Profile() {
     if (newProductImage) {
       formData.append("fileName", newProductImage.name);
     }
-    formData.append("category", newProductCategory);
 
     // ensure that all fields are filled out
     if (
@@ -78,8 +77,6 @@ export default function Profile() {
       setNewProductDescription("");
       setNewProductName("");
       setNewProductPrice(0);
-      setNewProductImage(null);
-      setNewProductCategory("");
     }
   };
 
@@ -142,12 +139,13 @@ export default function Profile() {
           Profile for {user.displayName}
         </h1>
         {/* log out icon */}
-        <IconButton>
+        <IconButton
+          onClick={() => {
+            auth.signOut();
+          }}>
           <LogoutIcon
             className="profilePage-content-logoutIcon"
-            onClick={() => {
-              auth.signOut();
-            }}
+            
           />
         </IconButton>
 

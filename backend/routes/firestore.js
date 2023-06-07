@@ -93,7 +93,7 @@ router.post("/add-product", upload.single('file'), async function (req, res, nex
         // gets the image from the form data
         const image = req.file;
         // gets the rest of the data from the form data
-        const {name, description, price, creator_uid, fileName, category} = req.body;
+        const {name, description, price, creator_uid, fileName} = req.body;
         // creates upload params
         const uploadParams = {
             Bucket: "forge-swe2023-week3-ecommerce-bucket",
@@ -117,9 +117,7 @@ router.post("/add-product", upload.single('file'), async function (req, res, nex
             description: description,
             price: price,
             creator_uid: creator_uid,
-            image_url: "https://forge-swe2023-week3-ecommerce-bucket.s3.us-east-2.amazonaws.com/product-images/" + fileName,
-            category: category
-
+            image_url: "https://forge-swe2023-week3-ecommerce-bucket.s3.us-east-2.amazonaws.com/product-images/" + fileName
         });
         res.send("Product added with ID: " + newProductRef.id);
 
