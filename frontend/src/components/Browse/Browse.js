@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Browse from "./Allproducts.js";
-import "./App.css";
+// import Browse from "./Allproducts.js";
+// import "./App.css";
 
 // import { useState } from "react";
 
