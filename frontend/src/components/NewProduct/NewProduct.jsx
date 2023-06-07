@@ -140,7 +140,9 @@ function NewProduct() {
 
       <Dialog
           open={confirmationPopup}
-          onClose={() => setConfirmationPopup(false)}
+          onClose={() => {setConfirmationPopup(false); 
+                          navigate(RouteLocations.profile);
+                          }}
       >
         <DialogContent id="alert-dialog-description">
               <h1> Product Successfully Uploaded! </h1>
@@ -148,7 +150,9 @@ function NewProduct() {
         <DialogActions>
             <ThemeProvider theme={theme}>
               <Button variant="contained" 
-                      onClick={() => setConfirmationPopup(false)}
+                      onClick={() => {setConfirmationPopup(false); 
+                                      navigate(RouteLocations.profile);
+                                      }}
                       size = "large"> 
                       Close
               </Button>
