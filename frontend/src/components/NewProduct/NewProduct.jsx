@@ -270,12 +270,6 @@ function NewProduct() {
         
       </form>
     </>
-
-
-
-
-
-
   )
 }
 
