@@ -46,7 +46,6 @@ export default function Profile() {
     if (newProductImage) {
       formData.append("fileName", newProductImage.name);
     }
-    formData.append("category", newProductCategory);
 
     // ensure that all fields are filled out
     if (
@@ -72,8 +71,6 @@ export default function Profile() {
       setNewProductDescription("");
       setNewProductName("");
       setNewProductPrice(0);
-      setNewProductImage(null);
-      setNewProductCategory("");
     }
   };
 
