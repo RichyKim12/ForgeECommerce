@@ -26,6 +26,8 @@ function NewProduct() {
   const [selectedImage, setSelectedImage] = useState('')
   const [itemName, setItemName] = useState('')
   const [itemDescription, setItemDescription] = useState('')
+  const [itemPrice, setItemPrice] = useState('')
+
   const formRef = React.useRef();
   const fileSelectHandler=(e)=> {
     console.log(e.target.files[0])
@@ -41,6 +43,8 @@ function NewProduct() {
     formData.append('image', selectedImage)
     formData.append('itemName', itemName);
     formData.append('itemDescription', itemDescription);
+    formData.append('itemPrice', itemPrice);
+
     axios.post("http://localhost:9000/ProductUpload", formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -56,7 +60,7 @@ function NewProduct() {
   }
   
 
-  
+  // Need to add categories drop down list
   // TODO: Fix CSS stuff later,
   // TODO: Make form unsubmittable if any fields are empty (useStates?)
   // Need to display a form that takes necessary info:
@@ -69,12 +73,12 @@ function NewProduct() {
       
       <h1>Upload a New Product</h1>
       <form ref = {formRef}onSubmit={fileUploadHandler}>
-      {/* Item Description */}
+      {/* Item Name */}
       <div className= "itemNameContainer">
           <Box style={{ width: "250px" }}>
             <TextField
               variant="outlined"
-              name="item name"
+              name="product name"
               type="text"
               required
               label= "Product Name"
@@ -83,6 +87,24 @@ function NewProduct() {
                 fieldset: { borderColor: "#000000" }
               }}
               onChange={(e) => setItemName(e.target.value)}
+            />
+          </Box>
+      </div>
+
+      {/* Item Name */}
+      <div className= "itemNameContainer">
+          <Box style={{ width: "250px" }}>
+            <TextField
+              variant="outlined"
+              name="product price"
+              type="number"
+              required
+              label= "Price (USD)"
+              fullWidth
+              sx={{
+                fieldset: { borderColor: "#000000" }
+              }}
+              onChange={(e) => setItemPrice(e.target.value)}
             />
           </Box>
       </div>
