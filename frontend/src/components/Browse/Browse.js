@@ -51,6 +51,7 @@ function Browse() {
                   title={item.title}
                   description={item.description}
                   price={item.price}
+                  image = {item.thumbnail}
                 />
               </Card>
             </Grid>

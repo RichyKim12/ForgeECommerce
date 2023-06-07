@@ -32,6 +32,7 @@ const ExpandMore = styled((props) => {
 
 export default function Allproducts(props) {
   const [expanded, setExpanded] = React.useState(false);
+
   const [curvalue, setCurvalue] = useState("");
   const getPickerValue = (value) => {
     setCurvalue(value);
@@ -46,7 +47,7 @@ export default function Allproducts(props) {
       <CardMedia
         component="img"
         height="194"
-        image="/static/images/cards/paella.jpg"
+        image={props.image}
         alt={props.title}
       />
       <CardContent>
@@ -61,6 +62,7 @@ export default function Allproducts(props) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
+        {/* This button actually adds item to card wth quantity */}
         <IconButton aria-label="add to favorites">
           <Cart
             title={props.title}
