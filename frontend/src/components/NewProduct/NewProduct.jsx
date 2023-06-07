@@ -7,6 +7,8 @@ import "./NewProduct.css";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
+import { RouteLocations } from "../../RouteLocations";
 import {
   FormControl,
   Select,
@@ -58,20 +60,24 @@ function NewProduct() {
   const [newProductCategory, setNewProductCategory] = useState("");
   const formRef = React.useRef();
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
         console.log(user.displayName)
-
+      }
+      else {
+        navigate(RouteLocations.login);
       }
     });
     return unsubscribe;
   }, [user]);
 
-  if (!user) { // Temporary fix to prevent users from selling items without an account
-    return <h1> Login First :/</h1>;
+  if (!user) { 
+    return <h1> Redirecting... </h1>;
   }
   const fileSelectHandler=(e)=> {
     console.log(e.target.files[0])
