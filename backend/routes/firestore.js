@@ -26,6 +26,7 @@ const {
   addDoc,
   updateDoc,
   deleteDoc,
+  doc
 } = require("firebase/firestore");
 
 router.get("/", function (req, res, next) {
@@ -194,22 +195,29 @@ router.delete("/delete-product-by-id/:id", async function (req, res, next) {
 // DELETE request to delete a product by name
 router.delete("/delete-product-by-name/:name", async function (req, res, next) {
     try {
-        const productsRef = collection(db, "products");
-        const productsSnapshot = await getDocs(productsRef);
-        const productsList = productsSnapshot.docs.map((doc) => {
-            return {
-                id: doc.id,
-                ...doc.data(),
-            };
-        });
-        const product = productsList.find((product) => product.name === req.params.name);
-        const productRef = doc(db, "products", product.id);
-        await deleteDoc(productRef);
-        res.send("Product deleted");
+      console.log(req.params.name);
+      const productsRef = collection(db, "products");
+      const productsSnapshot = await getDocs(productsRef);
+      const productsList = productsSnapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+      const product = productsList.find((product) => product.name === req.params.name);
+      console.log(product);
+      // delete the document
+      try {
+        await deleteDoc(doc(db, "products", product.id));
+      } catch(e) {
+        console.log("Error deleting document", e);
+      }
+      res.send("Product deleted");
     } catch (error) {
-        res.status(500).send("Error deleting product");
+      res.status(500).send("Error deleting product");
     }
-});
+  });
+  
 
 // GET request to get all users
 router.get("/get-all-users", async function (req, res, next) {
