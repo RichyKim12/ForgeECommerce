@@ -17,6 +17,7 @@ import { createTheme } from "@mui/material/styles";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 // firebase
 import { auth, db } from "../../firebase";
+import { onAuthStateChanged } from "firebase/auth";
 // axios
 import axios from "axios";
 
@@ -79,6 +80,21 @@ const NavigationBar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const location = useLocation();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+        console.log(user.displayName)
+      }
+      else{
+        setUser(null)
+      }
+    });
+    return unsubscribe;
+  }, [user]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -122,6 +138,7 @@ const NavigationBar = () => {
             </IconButton>
           ) : (
             <div>
+              {/* Home Button */}
               <Button
                 component={RouterLink}
                 to="/"
@@ -133,19 +150,23 @@ const NavigationBar = () => {
                   className={location.pathname === "/" ? "active" : ""}
                 />
               </Button>
-              <Button
+              {/* Sell Items */}
+              {user && 
+              (<Button
                 component={RouterLink}
                 to="/newproduct"
                 color="inherit"
                 sx={{ marginRight: "12px" }}
-              >
+                >
                 <StyledStorefrontIcon
                   className={
                     location.pathname === "/newproduct" ? "active" : ""
                   }
                   fontSize="large"
                 />
-              </Button>
+              </Button>)}
+              
+              {/* Cart */}
               <Button
                 component={RouterLink}
                 to="/cart"
@@ -157,6 +178,7 @@ const NavigationBar = () => {
                   fontSize="large"
                 />
               </Button>
+              {/* Profile */}
               <Button color="inherit" component={RouterLink} to="/profile">
                 <StyledAccountBoxIcon
                   className={location.pathname === "/profile" ? "active" : ""}
@@ -177,24 +199,30 @@ const NavigationBar = () => {
           onClose={toggleDrawer}
         >
           <List sx={{ width: 150 }} onClick={toggleDrawer}>
+            {/* Home */}
             <ListItem component={RouterLink} to="/">
               <StyledHomeIcon
                 fontSize="large"
                 className={location.pathname === "/" ? "active" : ""}
               />
             </ListItem>
-            <ListItem  component={RouterLink} to="/newproduct">
+            {/* Sell */}
+            {user && 
+            (<ListItem  component={RouterLink} to="/newproduct">
               <StyledStorefrontIcon
                 className={location.pathname === "/newproduct" ? "active" : ""}
                 fontSize="large"
               />
-            </ListItem>
+            </ListItem>)}
+            
+            {/* Cart */}
             <ListItem  component={RouterLink} to="/cart">
               <StyledShoppingCartIcon
                 className={location.pathname === "/cart" ? "active" : ""}
                 fontSize="large"
               />
             </ListItem>
+            {/* Profile */}
             <ListItem component={RouterLink} to="/profile">
               <StyledAccountBoxIcon
                 className={location.pathname === "/profile" ? "active" : ""}

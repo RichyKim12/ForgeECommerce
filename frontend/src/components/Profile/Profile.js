@@ -82,6 +82,7 @@ export default function Profile() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      
       if (user) {
         setUser(user);
         // get the user's products
