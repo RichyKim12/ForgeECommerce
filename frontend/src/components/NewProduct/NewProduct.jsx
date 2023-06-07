@@ -1,4 +1,6 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
+import { auth } from "../../firebase";
+import { onAuthStateChanged } from "firebase/auth";
 import Button from "@mui/material/Button";
 import axios from "axios";
 import "./NewProduct.css";
@@ -54,8 +56,22 @@ function NewProduct() {
   const [itemDescription, setItemDescription] = useState('')
   const [itemPrice, setItemPrice] = useState('')
   const [newProductCategory, setNewProductCategory] = useState("");
-
   const formRef = React.useRef();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+        console.log(user.displayName)
+        // get the user's products
+        
+      }
+    });
+    return unsubscribe;
+  }, [user]);
+
+
   const fileSelectHandler=(e)=> {
     console.log(e.target.files[0])
     setSelectedImage(e.target.files[0])  
@@ -72,7 +88,7 @@ function NewProduct() {
     formData.append('description', itemDescription);
     formData.append('price', itemPrice);
     formData.append("fileName", selectedImage.name)
-    formData.append("creator_uid","xA8ikVBtHWaJs35pEas7iWAUbDA2")
+    formData.append("creator_uid", user.uid)
     try {
       const response = await axios.post(
         "http://localhost:9000/firestore/add-product",
