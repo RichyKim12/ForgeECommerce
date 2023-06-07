@@ -5,6 +5,11 @@ import "./NewProduct.css";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {
+  FormControl,
+  Select,
+  MenuItem,
+} from "@mui/material";
 
 const theme = createTheme({
   status: {
@@ -21,12 +26,34 @@ const theme = createTheme({
     },
   },
 });
-
+const productCategoriesArray = [
+  "smartphones",
+  "laptops",
+  "fragrances",
+  "skincare",
+  "groceries",
+  "home-decoration",
+  "furniture",
+  "tops",
+  "womens-dresses",
+  "womens-shoes",
+  "mens-shirts",
+  "mens-shoes",
+  "mens-watches",
+  "womens-watches",
+  "womens-bags",
+  "womens-jewellery",
+  "sunglasses",
+  "automotive",
+  "motorcycle",
+  "lighting",
+];
 function NewProduct() {
   const [selectedImage, setSelectedImage] = useState('')
   const [itemName, setItemName] = useState('')
   const [itemDescription, setItemDescription] = useState('')
   const [itemPrice, setItemPrice] = useState('')
+  const [newProductCategory, setNewProductCategory] = useState("");
 
   const formRef = React.useRef();
   const fileSelectHandler=(e)=> {
@@ -38,18 +65,22 @@ function NewProduct() {
 
   // Does two things
   // 1. Add it to firebase backend
-  const fileUploadHandler=()=>{
+  const fileUploadHandler=async()=>{
     const formData = new FormData()
-    formData.append('image', selectedImage)
-    formData.append('itemName', itemName);
-    formData.append('itemDescription', itemDescription);
-    formData.append('itemPrice', itemPrice);
-
-    axios.post("http://localhost:9000/ProductUpload", formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
+    formData.append('file', selectedImage)
+    formData.append('name', itemName);
+    formData.append('description', itemDescription);
+    formData.append('price', itemPrice);
+    formData.append("fileName", selectedImage.name)
+    formData.append("creator_uid","xA8ikVBtHWaJs35pEas7iWAUbDA2")
+    try {
+      const response = await axios.post(
+        "http://localhost:9000/firestore/add-product",
+        formData
+      );
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const handleSubmit = (e) =>{
@@ -129,6 +160,31 @@ function NewProduct() {
           />
         </Box>
       </div>
+
+      {/* Category Dropdown menu */}
+      <div className = "fileUploadContainer">
+        <FormControl sx={{fieldset: { borderColor: "#000000" }}}>
+          <Select
+            value={newProductCategory}
+            onChange={(e) => {setNewProductCategory(e.target.value);}}
+            displayEmpty
+            required
+            inputProps={{name: "category", id: "category"}}
+          >
+            <MenuItem value="" disabled>
+              Select Category
+            </MenuItem>
+            {productCategoriesArray.map((category, index) => {
+              return (
+                <MenuItem key={index} value={category}>
+                  {category}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+      </div>
+
 
       {/* File Upload */}
       <div className = "fileUploadContainer">
