@@ -13,6 +13,9 @@ import {
   FormControl,
   Select,
   MenuItem,
+  Dialog,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
 
 const theme = createTheme({
@@ -58,6 +61,7 @@ function NewProduct() {
   const [itemDescription, setItemDescription] = useState('')
   const [itemPrice, setItemPrice] = useState('')
   const [newProductCategory, setNewProductCategory] = useState("");
+  const [confirmationPopup, setConfirmationPopup] = useState(false)
   const formRef = React.useRef();
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
@@ -74,7 +78,7 @@ function NewProduct() {
       }
     });
     return unsubscribe;
-  }, [user]);
+  }, [user,navigate]);
 
   if (!user) { 
     return <h1> Redirecting... </h1>;
@@ -100,7 +104,13 @@ function NewProduct() {
       const response = await axios.post(
         "http://localhost:9000/firestore/add-product",
         formData
-      );
+      ).then((res) => {
+        if( res.status === 200){
+          // Need to create alert for successful product upload
+          // Redirect after user affirms the alert
+          setConfirmationPopup(true)
+        }
+      });// If successful, give a popup and go to browse page
     } catch (error) {
       console.log(error);
     }
@@ -127,6 +137,25 @@ function NewProduct() {
       
       <h1>Upload a New Product</h1>
       <form ref = {formRef}onSubmit={fileUploadHandler}>
+
+      <Dialog
+          open={confirmationPopup}
+          onClose={() => setConfirmationPopup(false)}
+      >
+        <DialogContent id="alert-dialog-description">
+              <h1> Product Successfully Uploaded! </h1>
+        </DialogContent>
+        <DialogActions>
+            <ThemeProvider theme={theme}>
+              <Button variant="contained" 
+                      onClick={() => setConfirmationPopup(false)}
+                      size = "large"> 
+                      Close
+              </Button>
+            </ThemeProvider>
+        </DialogActions>
+      </Dialog>
+      
       {/* Item Name */}
       <div className= "itemNameContainer">
           <Box style={{ width: "250px" }}>
