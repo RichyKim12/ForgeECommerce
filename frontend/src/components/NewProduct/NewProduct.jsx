@@ -71,7 +71,9 @@ function NewProduct() {
     return unsubscribe;
   }, [user]);
 
-
+  if (!user) { // Temporary fix to prevent users from selling items without an account
+    return <div>Loading...</div>;
+  }
   const fileSelectHandler=(e)=> {
     console.log(e.target.files[0])
     setSelectedImage(e.target.files[0])  
