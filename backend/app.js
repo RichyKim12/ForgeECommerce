@@ -45,6 +45,10 @@ app.use('/payment', paymentRouter);
 app.use('/bucket', bucketRouter);
 app.use('/firestore', firestoreRouter);
 
+app.use('/bucket', bucketRouter);
+app.use("/productupload", productUploadRouter);
+app.use('/firestore', firestoreRouter);
+
 // Set CORS headers for all routes
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', ['http://localhost:3000', 'https://checkout.stripe.com']);
@@ -61,9 +65,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/bucket', bucketRouter);
-app.use("/productupload", productUploadRouter);
-app.use('/firestore', firestoreRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
