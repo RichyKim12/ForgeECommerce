@@ -75,26 +75,7 @@ function Browse(user) {
               <SendIcon />
             </ListItemButton>
           </ListItem>
-          {/* <input
-            id="string"
-            placeholder="Search for anything..."
-            type="string"
-            value={text}
-            onChange={(event) => {
-              setText(event.target.value);
-              console.log(text);
-            }}
-          ></input> */}
-          {/* <div>
-            <button
-              class="fa fa-search"
-              type="submit"
-              onClick={handleSubmit}
-              // style={{ margin: "5rem" }}
-            >
-              GO!
-            </button>
-          </div> */}
+          
         </header>
 
         {triviaData.length === 0 ? (
