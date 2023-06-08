@@ -27,7 +27,7 @@ function Cart(props) {
 
     if (!cart){  //Empty cart
       if (props.title){
-        const item = [{title:props.title, rating:props.rating, brand:props.brand, description:props.description,
+        const item = [{name:props.title, rating:props.rating, brand:props.brand, description:props.description,
                       price:props.price, image:props.img, quantity:props.quantity}]
         Cookies.set("cart", JSON.stringify(item))
         // print for test
@@ -38,7 +38,7 @@ function Cart(props) {
     }
     else{ // Non-empty cart
       if (props.title){
-        const item = {title:props.title, rating:props.rating, brand:props.brand, description:props.description,
+        const item = {name:props.title, rating:props.rating, brand:props.brand, description:props.description,
           price:props.price, image:props.img, quantity:props.quantity}
         let parsedArray = JSON.parse(cart)
         parsedArray.push(item)

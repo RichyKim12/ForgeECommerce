@@ -109,28 +109,28 @@ export default function Profile() {
     return <div>Loading...</div>;
   }
 
-  const productCategoriesArray = [
-    "smartphones",
-    "laptops",
-    "fragrances",
-    "skincare",
-    "groceries",
-    "home-decoration",
-    "furniture",
-    "tops",
-    "womens-dresses",
-    "womens-shoes",
-    "mens-shirts",
-    "mens-shoes",
-    "mens-watches",
-    "womens-watches",
-    "womens-bags",
-    "womens-jewellery",
-    "sunglasses",
-    "automotive",
-    "motorcycle",
-    "lighting",
-  ];
+  const productCategoriesArray = {
+    smartphones: "Smartphones",
+    laptops: "Laptops",
+    fragrances: "Fragrances",
+    skincare: "Skincare",
+    groceries: "Groceries",
+    home_decoration: "Home Decoration",
+    furniture: "Furniture",
+    tops: "Tops",
+    womens_dresses: "Women's Dresses",
+    womens_shoes: "Women's Shoes",
+    mens_shirts: "Men's Shirts",
+    mens_shoes: "Men's Shoes",
+    mens_watches: "Men's Watches",
+    womens_watches: "Women's Watches",
+    womens_bags: "Women's Bags",
+    womens_jewellery: "Women's Jewelry", // american english #cringe
+    sunglasses: "Sunglasses",
+    automotive: "Automotive",
+    motorcycle: "Motorcycle",
+    lighting: "Lighting",
+  };
 
   // cahnge
 
@@ -227,7 +227,7 @@ export default function Profile() {
               }}
             />
             {/* dropdown for categories */}
-            <FormControl fullWidth>
+            <FormControl fullWidth >
               <Select
                 value={newProductCategory}
                 onChange={(e) => {
@@ -242,13 +242,13 @@ export default function Profile() {
                 <MenuItem value="" disabled>
                   Select Category
                 </MenuItem>
-                {productCategoriesArray.map((category, index) => {
-                  return (
-                    <MenuItem key={index} value={category}>
-                      {category}
-                    </MenuItem>
-                  );
-                })}
+                {Object.keys(productCategoriesArray).map((category, index) => {
+                    return (
+                      <MenuItem value={category.toString().replace("_", "-")} key={index}>
+                        {productCategoriesArray[category]}
+                      </MenuItem>
+                    );
+                  })}
               </Select>
             </FormControl>
 
