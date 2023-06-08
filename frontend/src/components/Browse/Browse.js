@@ -32,7 +32,7 @@ function Browse(user) {
       .then((data) => setTriviaData(data.products))
       .catch((error) => console.log("Error: ", error));
     // fetch data from firestore for that category
-    const firestoreResponse = await fetch(`http://localhost:9000/firestore/get-products-by-category/${text}`);
+    const firestoreResponse = await fetch(`https://week3-team4-ecommerce-backend.onrender.com/firestore/get-products-by-category/${text}`);
     const firestoreData = await firestoreResponse.json();
   console.log('firestore data for category', text, "is",  firestoreData);
     // Update the state with the combined data
@@ -49,7 +49,7 @@ function Browse(user) {
         const dummyData = await dummyResponse.json();
         setTriviaData(dummyData.products);
   
-        const firestoreResponse = await fetch("http://localhost:9000/firestore/get-all-products");
+        const firestoreResponse = await fetch("https://week3-team4-ecommerce-backend.onrender.com/firestore/get-all-products");
         const firestoreData = await firestoreResponse.json();
         console.log('firestore data', firestoreData);
         // Update the state with the combined data

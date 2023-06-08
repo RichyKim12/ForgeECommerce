@@ -100,9 +100,11 @@ function NewProduct() {
     formData.append('price', itemPrice);
     formData.append("fileName", selectedImage.name)
     formData.append("creator_uid", user.uid)
+    formData.append("category",newProductCategory)
+
     try {
       const response = await axios.post(
-        "http://localhost:9000/firestore/add-product",
+        "https://week3-team4-ecommerce-backend.onrender.com/firestore/add-product",
         formData
       ).then((res) => {
         if( res.status === 200){

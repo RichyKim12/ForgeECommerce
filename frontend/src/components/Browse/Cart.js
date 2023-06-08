@@ -9,17 +9,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 import db from "../../firebase";
 import { collection, addDoc } from "@firebase/firestore";
 import CardMedia from "@mui/material/CardMedia";
-
+import Cookies from 'js-cookie'
 function Cart(props) {
-  const [ititle, setItitle] = useState();
-  const [irating, setIrating] = useState();
-  const [ibrand, setIbrand] = useState();
-  const [idescription, setIdescription] = useState();
-  const [iprice, setIprice] = useState();
-  const [iuser, setIuser] = useState();
-  const [iimg, setIimg] = useState();
-  const [iquantity, setIquantity] = useState();
-
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -29,32 +20,38 @@ function Cart(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  async function addEventdb() {
-    setItitle(props.title);
-    setIrating(props.rating);
-    setIbrand(props.brand);
-    setIdescription(props.description);
-    setIprice(props.price);
-    setIuser(props.user);
-    setIimg(props.img);
-    setIquantity(props.quantity);
+  const addToCart = () =>{
+    // Cookies.remove("cart")
+    let cart = Cookies.get("cart")
+    console.log(props.title)
 
-    try {
-      const docRef = await addDoc(collection(db, "cart"), {
-        user: iuser,
-        title: ititle,
-        rating: irating,
-        img: iimg,
-        brand: ibrand,
-        price: iprice,
-        description: idescription,
-        quantity: iquantity,
-      });
-
-      console.log("document ID: ", docRef.id);
-    } catch (error) {
-      console.error("error adding doc: ", error);
+    if (!cart){  //Empty cart
+      if (props.title){
+        const item = [{title:props.title, rating:props.rating, brand:props.brand, description:props.description,
+                      price:props.price, image:props.img, quantity:props.quantity}]
+        Cookies.set("cart", JSON.stringify(item))
+        // print for test
+        cart = Cookies.get("cart")
+        let parsedArray = JSON.parse(cart)
+        console.log(parsedArray)
+      }
     }
+    else{ // Non-empty cart
+      if (props.title){
+        const item = {title:props.title, rating:props.rating, brand:props.brand, description:props.description,
+          price:props.price, image:props.img, quantity:props.quantity}
+        let parsedArray = JSON.parse(cart)
+        parsedArray.push(item)
+        Cookies.set("cart", JSON.stringify(parsedArray))
+        // print for tests
+        cart = Cookies.get("cart")
+        parsedArray = JSON.parse(cart)
+        console.log(parsedArray)
+      }
+    }
+  }
+  async function addEventdb() {
+    addToCart()
     setOpen(false);
   }
   return (

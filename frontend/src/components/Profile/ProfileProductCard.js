@@ -61,7 +61,7 @@ export default function ProfileProductCard(props) {
 
   const handleDeleteProduct = async () => {
 
-    const response = await axios.delete(`http://localhost:9000/firestore/delete-product-by-name/${props.title}`)
+    const response = await axios.delete(`https://week3-team4-ecommerce-backend.onrender.com/firestore/delete-product-by-name/${props.title}`)
     console.log(response);
     setExpandDeletePopup(false);
     // re-render the page
