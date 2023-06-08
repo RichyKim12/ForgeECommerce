@@ -1,0 +1,18 @@
+.success {
+    display: grid;
+    place-content: center;
+    width: 100vw;
+    height: 100vh;
+
+}
+
+.success-container {
+    border: 1px solid black;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.success-container-title {
+    color: black;
+}
