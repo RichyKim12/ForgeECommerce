@@ -20,13 +20,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
 
-import Cookies from 'js-cookie';
-
-// import { doc, addDoc, collection } from "@firebase/firestore";
-// import db from "../../firebase";
-
 import db from "../../firebase";
-import { collection, addDoc, Timestamp } from "@firebase/firestore";
+import { collection, addDoc } from "@firebase/firestore";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -42,13 +37,6 @@ const ExpandMore = styled((props) => {
 export default function Allproducts(props) {
   const [expanded, setExpanded] = React.useState(false);
   const [curvalue, setCurvalue] = useState("1");
-  const [ititle, setItitle] = useState();
-  const [irating, setIrating] = useState();
-  const [ibrand, setIbrand] = useState();
-  const [idescription, setIdescription] = useState();
-  const [iprice, setIprice] = useState();
-  const [iuser, setIuser] = useState();
-  const [iimg, setIimg] = useState();
 
   const getPickerValue = (value) => {
     setCurvalue(value);
@@ -57,62 +45,6 @@ export default function Allproducts(props) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
-  const addToCart = () =>{
-    // Cookies.remove("cart")
-    let cart = Cookies.get("cart")
-    if (!cart){  //Empty cart
-      if (ititle){
-        const item = [{title:ititle, rating:irating, brand:ibrand, description:idescription,
-                      price:iprice, image:iimg, quantity:curvalue}]
-        Cookies.set("cart", JSON.stringify(item))
-        // print for test
-        cart = Cookies.get("cart")
-        let parsedArray = JSON.parse(cart)
-        console.log(parsedArray)
-      }
-    }
-    else{ // Non-empty cart
-      if (ititle){
-        const item = {title:ititle, rating:irating, brand:ibrand, description:idescription,
-          price:iprice, image:iimg, quantity:curvalue}
-        let parsedArray = JSON.parse(cart)
-        parsedArray.push(item)
-        Cookies.set("cart", JSON.stringify(parsedArray))
-        // print for tests
-        cart = Cookies.get("cart")
-        parsedArray = JSON.parse(cart)
-        console.log(parsedArray)
-      }
-    }
-  }
-
-  // This will store cart items within local storage
-  async function addEventdb() {
-    setItitle(props.title);
-    setIrating(props.rating);
-    setIbrand(props.brand);
-    setIdescription(props.description);
-    setIprice(props.price);
-    setIimg(props.img);
-    addToCart()
-    // try {
-    //   const docRef = await addDoc(collection(db, "cart"), {
-    //     user: iuser,
-    //     title: ititle,
-    //     rating: irating,
-    //     img: iimg,
-    //     brand: ibrand,
-    //     price: iprice,
-    //     description: idescription,
-    //     quantity: curvalue,
-    //   });
-
-    //   console.log("document ID: ", docRef.id);
-    // } catch (error) {
-    //   console.error("error adding doc: ", error);
-    // }
-  }
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -137,8 +69,7 @@ export default function Allproducts(props) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        {/* Add to cart button */}
-        <Button onClick={addEventdb} style={{ background: "white" }}>
+        <Button style={{ background: "white" }}>
           <Cart
             title={props.title}
             rating={props.rating}
@@ -147,18 +78,10 @@ export default function Allproducts(props) {
             price={props.price}
             quantity={curvalue}
             user={props.user}
-            img={props.thumbnail}
+            img={props.img}
           />
         </Button>
-        {/* <IconButton aria-label="add to favorites">
-         <Cart
-           title={props.title}
-           rating={props.rating}
-           brand={props.brand}
-           description={props.description}
-           price={props.price}
-         />
-       </IconButton> */}
+
         <QuantityPicker
           width=".7rem"
           value={1}
