@@ -64,6 +64,7 @@ export default function Allproducts(props) {
       <CardActions disableSpacing>
         {/* This button actually adds item to card wth quantity */}
         <IconButton aria-label="add to favorites">
+          {/* Should I create the cart item and store it inside cookies? */}
           <Cart
             title={props.title}
             rating={props.rating}
