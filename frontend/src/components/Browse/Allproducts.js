@@ -20,11 +20,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
 
-// import { doc, addDoc, collection } from "@firebase/firestore";
-// import db from "../../firebase";
-
 import db from "../../firebase";
-import { collection, addDoc, Timestamp } from "@firebase/firestore";
+import { collection, addDoc } from "@firebase/firestore";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -40,13 +37,6 @@ const ExpandMore = styled((props) => {
 export default function Allproducts(props) {
   const [expanded, setExpanded] = React.useState(false);
   const [curvalue, setCurvalue] = useState("1");
-  const [ititle, setItitle] = useState();
-  const [irating, setIrating] = useState();
-  const [ibrand, setIbrand] = useState();
-  const [idescription, setIdescription] = useState();
-  const [iprice, setIprice] = useState();
-  const [iuser, setIuser] = useState();
-  const [iimg, setIimg] = useState();
 
   const getPickerValue = (value) => {
     setCurvalue(value);
@@ -56,39 +46,12 @@ export default function Allproducts(props) {
     setExpanded(!expanded);
   };
 
-  async function addEventdb() {
-    setItitle(props.title);
-    setIrating(props.rating);
-    setIbrand(props.brand);
-    setIdescription(props.description);
-    setIprice(props.price);
-    setIuser(props.user);
-    setIimg(props.img);
-
-    try {
-      const docRef = await addDoc(collection(db, "cart"), {
-        user: iuser,
-        title: ititle,
-        rating: irating,
-        img: iimg,
-        brand: ibrand,
-        price: iprice,
-        description: idescription,
-        quantity: curvalue,
-      });
-
-      console.log("document ID: ", docRef.id);
-    } catch (error) {
-      console.error("error adding doc: ", error);
-    }
-  }
-
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         component="img"
         height="194"
-        image="/static/images/cards/paella.jpg"
+        image={props.img}
         alt={props.title}
       />
       <CardContent>
@@ -106,7 +69,7 @@ export default function Allproducts(props) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <Button onClick={addEventdb} style={{ background: "white" }}>
+        <Button style={{ background: "white" }}>
           <Cart
             title={props.title}
             rating={props.rating}
@@ -115,18 +78,10 @@ export default function Allproducts(props) {
             price={props.price}
             quantity={curvalue}
             user={props.user}
-            img={props.thumbnail}
+            img={props.img}
           />
         </Button>
-        {/* <IconButton aria-label="add to favorites">
-         <Cart
-           title={props.title}
-           rating={props.rating}
-           brand={props.brand}
-           description={props.description}
-           price={props.price}
-         />
-       </IconButton> */}
+
         <QuantityPicker
           width=".7rem"
           value={1}
