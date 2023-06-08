@@ -34,7 +34,7 @@ function Browse(user) {
     // fetch data from firestore for that category
     const firestoreResponse = await fetch(`https://week3-team4-ecommerce-backend.onrender.com/firestore/get-products-by-category/${text}`);
     const firestoreData = await firestoreResponse.json();
-  console.log('firestore data for category', text, "is",  firestoreData);
+    console.log('firestore data for category', text, "is", firestoreData);
     // Update the state with the combined data
     setTriviaData(prevState => [...prevState, ...firestoreData]);
 
@@ -48,7 +48,7 @@ function Browse(user) {
         const dummyResponse = await fetch("https://dummyjson.com/products");
         const dummyData = await dummyResponse.json();
         setTriviaData(dummyData.products);
-  
+
         const firestoreResponse = await fetch("https://week3-team4-ecommerce-backend.onrender.com/firestore/get-all-products");
         const firestoreData = await firestoreResponse.json();
         console.log('firestore data', firestoreData);
@@ -58,104 +58,131 @@ function Browse(user) {
         console.log("Error:", error);
       }
     };
-  
+
     fetchData();
   }, []);
-  
+
 
   return (
 
-//     <div className="page">
-//       <header>
-//         <label for="string">Find anything you need: </label>
-//         <input
-//           id="string"
-//           placeholder="Search for anything..."
-//           type="string"
-//           valueholder=""
-//           onChange={(event) => setText(event.target.value)}
-//         ></input>
-//         <div>
-//           <button class="fa fa-search" type="submit" onClick={() => { handleSubmit(); handleSubmit2(); }}>
-//             GO!
-//           </button>
-//         </div>
-//       </header>
-//       <div style={{ height: "88vh", overflow: "auto" }}>
-//         <Container maxWidth="lg"  >
-//           <Grid container spacing={4} justify="left" style={{ overflow: "auto" }}>
-//             {triviaData.map((item, index) => (
-//               <Grid item xs={12} sm={6} md={4} lg={3} key={index} >
-//                 <Card style={{ height: "100%" }}>
-//                   <Allproducts
-//                     title={item.title || item.name}
-//                     description={item.description}
-//                     price={item.price}
-//                   />
-//                 </Card>
-//               </Grid>
-//             ))}
-//           </Grid>
-//         </Container>
-//       </div>
+    //     <div className="page">
+    //       <header>
+    //         <label for="string">Find anything you need: </label>
+    //         <input
+    //           id="string"
+    //           placeholder="Search for anything..."
+    //           type="string"
+    //           valueholder=""
+    //           onChange={(event) => setText(event.target.value)}
+    //         ></input>
+    //         <div>
+    //           <button class="fa fa-search" type="submit" onClick={() => { handleSubmit(); handleSubmit2(); }}>
+    //             GO!
+    //           </button>
+    //         </div>
+    //       </header>
+    //       <div style={{ height: "88vh", overflow: "auto" }}>
+    //         <Container maxWidth="lg"  >
+    //           <Grid container spacing={4} justify="left" style={{ overflow: "auto" }}>
+    //             {triviaData.map((item, index) => (
+    //               <Grid item xs={12} sm={6} md={4} lg={3} key={index} >
+    //                 <Card style={{ height: "100%" }}>
+    //                   <Allproducts
+    //                     title={item.title || item.name}
+    //                     description={item.description}
+    //                     price={item.price}
+    //                   />
+    //                 </Card>
+    //               </Grid>
+    //             ))}
+    //           </Grid>
+    //         </Container>
+    //       </div>
 
 
     <div
       style={{
-        height: "100vh",
-        marginBottom: "500px",
+        // height: "100vh",
+
+        // marginBottom: "500px",
       }}
     >
-      <div className="page">
-        <header
+      <div
+      // // className="page"
+      // style={{
+      // display: "flex",
+      // alignItems: "center",
+      // marginBottom: "4rem",
+      // }}
+      >
+        {/* <div
+          // className="page"
+          // style={{
+          //   display: "flex",
+          //   alignItems: "center",
+            // marginBottom: "4rem",
+          // }}
+        > */}
+        <div
           style={{
             display: "flex",
             alignItems: "center",
-            marginBottom: "4rem",
+            margin: "auto",
+            padding: "auto"
+            // marginBottom: "4rem",
           }}
         >
-          <ListItem
-            disableGutters
-            sx={{
-              p: "2px 4px",
-              display: "flex",
-              alignItems: "center",
-              width: 400,
-            }}
-          >
-            <TextField
-              hiddenLabel
-              id="standard-textarea"
-              label="Find what you need:"
-              placeholder="Type here.."
-              multiline
-              variant="standard"
-              value={text}
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            margin: "auto",
+            padding: "auto",
+            marginBottom: "1rem",
+          }}>
+            <ListItem
+              // disableGutters
               sx={{
-                width: { sm: 400, md: 405 },
-                marginLeft: 4,
+                // p: "2px 4px",
+                display: "flex",
+                alignItems: "center",
+                // width: 400,
               }}
-              onChange={(e) => setText(e.target.value)}
-            />
-            <ListItemButton autoFocus onClick={() => handleSubmit()}>
-              <SendIcon />
-            </ListItemButton>
-          </ListItem>
-        </header>
+            >
+              <TextField
+                hiddenLabel
+                id="standard-textarea"
+                label="Find what you need:"
+                placeholder="Type here.."
+                multiline
+                variant="standard"
+                value={text}
+                sx={{
+                  width: { sm: 400, md: 405 },
+                  // marginLeft: 4,
+                }}
+                onChange={(e) => setText(e.target.value)}
+              />
+              <ListItemButton autoFocus onClick={() => handleSubmit()}>
+                <SendIcon />
+              </ListItemButton>
+            </ListItem>
+          </div>
+          {/* </div> */}
+        </div>
 
         <Container maxWidth="lg">
           <Grid container spacing={4} justify="left">
             {triviaData.map((item, index) => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-                  <Allproducts
-                    title={item.title ? item.title : item.name}
-                    description={item.description}
-                    price={item.price}
-                    brand={item.brand}
-                    rating={item.rating}
-                    user={user}
-                    img={item.thumbnail ? item.thumbnail : item.image_url}
-                  />
+                <Allproducts
+                  title={item.title ? item.title : item.name}
+                  description={item.description}
+                  price={item.price}
+                  brand={item.brand}
+                  rating={item.rating}
+                  user={user}
+                  img={item.thumbnail ? item.thumbnail : item.image_url}
+                />
               </Grid>
             ))}
           </Grid>
