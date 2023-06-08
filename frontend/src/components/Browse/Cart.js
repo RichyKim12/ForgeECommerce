@@ -10,6 +10,7 @@ import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
+<<<<<<< Updated upstream
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
@@ -33,6 +34,9 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
+=======
+import Cookies from 'js-cookie';
+>>>>>>> Stashed changes
 function Cart(props) {
   const [expanded, setExpanded] = React.useState(false);
 
@@ -50,6 +54,50 @@ function Cart(props) {
     setOpen(false);
   };
 
+<<<<<<< Updated upstream
+=======
+  const addToCart = () =>{
+    // Cookies.remove("cart")
+    let cart = Cookies.get("cart")
+    if (!cart){  //Empty cart
+      if (ititle){
+        const item = [{title:ititle, rating:irating, brand:ibrand, description:idescription,
+                      price:iprice, image:iimg, quantity:iquantity}]
+        Cookies.set("cart", JSON.stringify(item))
+        // print for test
+        cart = Cookies.get("cart")
+        let parsedArray = JSON.parse(cart)
+        console.log(parsedArray)
+      }
+    }
+    else{ // Non-empty cart
+      if (ititle){
+        const item = {title:ititle, rating:irating, brand:ibrand, description:idescription,
+          price:iprice, image:iimg, quantity:iquantity}
+        let parsedArray = JSON.parse(cart)
+        parsedArray.push(item)
+        Cookies.set("cart", JSON.stringify(parsedArray))
+        // print for tests
+        cart = Cookies.get("cart")
+        parsedArray = JSON.parse(cart)
+        console.log(parsedArray)
+      }
+    }
+  }
+  async function addEventdb() {
+    setItitle(props.title);
+    setIrating(props.rating);
+    setIbrand(props.brand);
+    setIdescription(props.description);
+    setIprice(props.price);
+    setIuser(props.user);
+    setIimg(props.img);
+    setIquantity(props.quantity);
+    addToCart();
+    
+    setOpen(false);
+  }
+>>>>>>> Stashed changes
   return (
     <div>
       <Button variant="" onClick={handleClickOpen}>
