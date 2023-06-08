@@ -68,7 +68,7 @@ export default function Profile() {
 
     try {
       const response = await axios.post(
-        "http://localhost:9000/firestore/add-product",
+        "https://week3-team4-ecommerce-backend.onrender.com/firestore/add-product",
         formData
       );
     } catch (error) {
@@ -89,7 +89,7 @@ export default function Profile() {
         // get the user's products
         const response = axios
           .get(
-            `http://localhost:9000/firestore/get-products-by-creator-uid/${user.uid}`
+            `https://week3-team4-ecommerce-backend.onrender.com/firestore/get-products-by-creator-uid/${user.uid}`
           )
           .then((response) => {
             console.log("response", response.data);
