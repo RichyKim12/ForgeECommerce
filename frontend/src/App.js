@@ -19,16 +19,7 @@ const themeLight = createTheme({
   },
 });
 
-const themeDark = createTheme({
-  palette: {
-    background: {
-      default: "#222222"
-    },
-    text: {
-      primary: "#ffffff"
-    }
-  }
-});
+
 function App() {
   return (
     <div className = "App">
