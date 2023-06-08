@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
-import Browse from "./Allproducts.js";
-import "./App.css";
+import Allproducts from "./Allproducts.js";
+import { Card, Container, Grid } from "@mui/material";
+import ListItem from "@mui/material/ListItem";
+import TextField from "@mui/material/TextField";
+import ListItemButton from "@mui/material/ListItemButton";
+import SendIcon from "@mui/icons-material/Send";
 
-// import { useState } from "react";
-
-function Browse() {
+function Browse(user) {
   const [triviaData, setTriviaData] = useState([]);
-  const [text, setText] = useState([]);
+  const [text, setText] = useState("");
   const [category, setCategory] = useState([]);
 
-  const handleSubmit = () => {
-    fetch(`https://dummyjson.com/products/category/groceries`)
+  const handleSubmit = async () => {
+    fetch(`https://dummyjson.com/products/${text}`)
       .then((response) => response.json())
       .then((data) => setTriviaData(data.products))
       .catch((error) => console.log("Error: ", error));
@@ -21,72 +23,71 @@ function Browse() {
   }, [triviaData]);
 
   return (
-    <div className="page">
-      <header>
-        <div className="title">
-          <h1>Trivia Quiz</h1>
-        </div>
-        <label for="string">Number of Questions: </label>
-        <input
-          id="string"
-          placeholder="Integer 1-50"
-          type="string"
-          onChange={(event) => setText(event.target.value)}
-        ></input>
-        <div>
-          <div className="categories">
-            <p>Category List:</p>
-            <ol>1. General Knowledge</ol>
-            <ol>2. Books</ol>
-            <ol>3. Film</ol>
-            <ol>4. Music</ol>
-            <ol>5. Musical & Theatres</ol>
-            <ol>6. TV</ol>
-            <ol>7. Video Games</ol>
-            <ol>8. Board Games</ol>
-            <ol>9. Science & Nature</ol>
-            <ol>10. Computers </ol>
-          </div>
-
-          <label for="string"> Category: </label>
+    <div
+      style={{
+        overflow: "auto",
+        height: "inherit",
+        marginBottom: "500px",
+      }}
+    >
+      <div className="page">
+        <header>
+          {/* <ListItem disableGutters>
+            <TextField
+              hiddenLabel
+              id="standard-textarea"
+              label="Join the Conversation"
+              placeholder="Type here.."
+              multiline
+              variant="standard"
+              value={text}
+              sx={{
+                width: { sm: 400, md: 405 },
+                marginLeft: 4,
+              }}
+              onChange={(e) => setText(e.target.value)}
+            />
+            <ListItemButton autoFocus onClick={() => handleSubmit()}>
+              <SendIcon />
+            </ListItemButton>
+          </ListItem> */}
+          <label for="string">Find anything you need: </label>
           <input
             id="string"
-            placeholder="Interger 1-10"
+            placeholder="Search for anything..."
             type="string"
-            onChange={(event) => setCategory(event.target.value)}
+            valueholder=""
+            onChange={(event) => setText(event.target.value)}
           ></input>
-          <button class="fa fa-search" type="submit" onClick={handleSubmit}>
-            GO!
-          </button>
-        </div>
-      </header>
+          <div>
+            <button class="fa fa-search" type="submit" onClick={handleSubmit}>
+              GO!
+            </button>
+          </div>
+        </header>
 
-      {triviaData.length === 0 ? (
-        <p> No questions available at this time.</p>
-      ) : (
-        <div>
-          {triviaData.map((item, index) => (
-            <Browse
-              key={index}
-              title={item.title}
-              description={item.description}
-              price={item.price}
-            />
-          ))}
-        </div>
-      )}
-
-      <label for="string">More Questions? </label>
-      <input
-        id="string"
-        placeholder="Integer 1-50"
-        type="string"
-        onChange={(event) => setText(event.target.value)}
-      ></input>
-      <button class="fa fa-search" type="submit" onClick={handleSubmit}>
-        GO!
-      </button>
+        <Container maxWidth="lg">
+          <Grid container spacing={4} justify="left">
+            {triviaData.map((item, index) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                <Card style={{ height: "100%" }}>
+                  <Allproducts
+                    title={item.title}
+                    description={item.description}
+                    price={item.price}
+                    brand={item.brand}
+                    rating={item.rating}
+                    user={user}
+                    img={item.img}
+                  />
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </div>
     </div>
   );
 }
 export default Browse;
+
