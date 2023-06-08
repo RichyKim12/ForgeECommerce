@@ -9,6 +9,8 @@ import Profile from './components/Profile/Profile';
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Login from './components/Login/Login';
+import Success from './components/Success/Success';
+import Cancel from './components/Cancel/Cancel';
 
 
 const themeLight = createTheme({
@@ -34,6 +36,8 @@ function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/cart" element={<CartPage/>} />
+                <Route path="/success" element={<Success/>} />
+                <Route path="/cancel" element={<Cancel/>} />
               </Routes>
               
         </BrowserRouter>
