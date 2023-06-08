@@ -22,20 +22,24 @@ import Cookies from "js-cookie";
 import { styled } from "@mui/system";
 
 const theme = createTheme({
-  status: {
-    danger: "#e53e3e",
-  },
-  palette: {
-    primary: {
-      main: "#606C38",
-      darker: "#053e85",
+    palette: {
+      primary: {
+        main: "#606C38",
+        darker: "#053e85",
+      },
     },
-    neutral: {
-      main: "#64748B",
-      contrastText: "#fff",
-    },
-  },
 });
+
+const deleteTheme = createTheme({
+    palette: {
+        primary: {
+          main: "#800000",
+          darker: "#053e85",
+        },
+
+      },
+})
+
 
 const CartPage = () => {
   // const stripe = useStripe();
@@ -137,7 +141,12 @@ const CartPage = () => {
               <h1> Remove from cart? </h1>
             </DialogContent>
             <DialogActions>
-              <ThemeProvider theme={theme}>
+                <ThemeProvider theme ={theme}>
+                    <Button size = "large" variant = "contained" onClick = {() => setConfirmationPopup(false)}>
+                        Cancel
+                    </Button>
+                </ThemeProvider>
+              <ThemeProvider theme={deleteTheme}>
                 <Button
                   variant="contained"
                   onClick={() => {
@@ -195,14 +204,16 @@ const CartPage = () => {
         Total Price: ${calculateTotalPrice()}
       </Typography>
       {/* <CardElement options={{ style: { base: { fontSize: '16px' } } }} /> */}
-      <Button
-        variant="contained"
-        color="primary"
-        style={{ marginTop: "16px" }}
-        onClick={handleCheckout}
-      >
-        Checkout
-      </Button>
+      <ThemeProvider theme={theme}>
+        <Button
+            variant="contained"
+            color="primary"
+            style={{ marginTop: "16px" }}
+            onClick={handleCheckout}
+        >
+            Checkout
+        </Button>
+      </ThemeProvider>
     </Container>
   );
 };

@@ -10,6 +10,28 @@ import db from "../../firebase";
 import { collection, addDoc } from "@firebase/firestore";
 import CardMedia from "@mui/material/CardMedia";
 import Cookies from 'js-cookie'
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#606C38",
+      darker: "#053e85",
+    },
+  },
+});
+
+const deleteTheme = createTheme({
+  palette: {
+      primary: {
+        main: "#800000",
+        darker: "#053e85",
+      },
+     
+    },
+})
+
 function Cart(props) {
   const [open, setOpen] = React.useState(false);
 
@@ -85,10 +107,14 @@ function Cart(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} autoFocus>
-            Cancel
-          </Button>
-          <Button onClick={addEventdb}>Confirm</Button>
+          <ThemeProvider theme={theme}>
+            <Button variant="contained" onClick={handleClose} autoFocus>
+              Cancel
+            </Button>
+          </ThemeProvider>
+          <ThemeProvider theme={deleteTheme}>
+           <Button variant="contained" onClick={addEventdb}>Confirm</Button>
+          </ThemeProvider>
         </DialogActions>
       </Dialog>
     </div>

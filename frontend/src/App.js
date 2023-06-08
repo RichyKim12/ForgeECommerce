@@ -14,6 +14,11 @@ import Cancel from './components/Cancel/Cancel';
 
 
 const themeLight = createTheme({
+
+
+  status: {
+    danger: "#e53e3e",
+  },
   palette: {
     background: {
       default: "#FEFAE0"
@@ -39,10 +44,10 @@ function App() {
                 <Route path="/success" element={<Success/>} />
                 <Route path="/cancel" element={<Cancel/>} />
               </Routes>
-              
+
         </BrowserRouter>
       </ThemeProvider>
-      
+
     </div>
   )
 }
