@@ -10,26 +10,27 @@ function Browse(user) {
   const [triviaData, setTriviaData] = useState([]);
   const [text, setText] = useState("");
   const [category, setCategory] = useState([]);
+  const [items, setItems] = useState([]);
 
   const handleSubmit = async () => {
-    console.log('i am submitting');
+    console.log("i am submitting");
     fetch(`https://dummyjson.com/products/category/${text}`)
       .then((response) => response.json())
       .then((data) => setTriviaData(data.products))
-      .catch((error) => console.log("Error: ", error));
+      // .then((data) => setItems(data))
+      .catch((error) => console.log("No items avaliable: ", error));
   };
 
-useEffect(() => {
+  useEffect(() => {
     console.log(triviaData);
   }, [triviaData]);
 
-  // on mount, load all the products
   useEffect(() => {
     fetch("https://dummyjson.com/products")
       .then((response) => response.json())
       .then((data) => setTriviaData(data.products))
       .catch((error) => console.log("Error: ", error));
-  }, [])
+  }, []);
 
   return (
     <div
@@ -40,12 +41,26 @@ useEffect(() => {
       }}
     >
       <div className="page">
-        <header>
-          {/* <ListItem disableGutters>
+        <header
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "4rem",
+          }}
+        >
+          <ListItem
+            disableGutters
+            sx={{
+              p: "2px 4px",
+              display: "flex",
+              alignItems: "center",
+              width: 400,
+            }}
+          >
             <TextField
               hiddenLabel
               id="standard-textarea"
-              label="Join the Conversation"
+              label="Find what you need:"
               placeholder="Type here.."
               multiline
               variant="standard"
@@ -59,9 +74,8 @@ useEffect(() => {
             <ListItemButton autoFocus onClick={() => handleSubmit()}>
               <SendIcon />
             </ListItemButton>
-          </ListItem> */}
-          <label for="string">Find anything you need: </label>
-          <input
+          </ListItem>
+          {/* <input
             id="string"
             placeholder="Search for anything..."
             type="string"
@@ -70,33 +84,42 @@ useEffect(() => {
               setText(event.target.value);
               console.log(text);
             }}
-          ></input>
-          <div>
-            <button class="fa fa-search" type="submit" onClick={handleSubmit} style={{margin:'5rem'}}>
+          ></input> */}
+          {/* <div>
+            <button
+              class="fa fa-search"
+              type="submit"
+              onClick={handleSubmit}
+              // style={{ margin: "5rem" }}
+            >
               GO!
             </button>
-          </div>
+          </div> */}
         </header>
 
-        <Container maxWidth="lg">
-          <Grid container spacing={4} justify="left">
-            {triviaData.map((item, index) => (
-              <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-                <Card style={{ height: "100%" }}>
-                  <Allproducts
-                    title={item.title}
-                    description={item.description}
-                    price={item.price}
-                    brand={item.brand}
-                    rating={item.rating}
-                    user={user}
-                    img={item.thumbnail}
-                  />
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
+        {triviaData.length === 0 ? (
+          <p> No items found at this time.</p>
+        ) : (
+          <Container maxWidth="lg">
+            <Grid container spacing={4} justify="left">
+              {triviaData.map((item, index) => (
+                <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                  <Card style={{ height: "100%" }}>
+                    <Allproducts
+                      title={item.title}
+                      description={item.description}
+                      price={item.price}
+                      brand={item.brand}
+                      rating={item.rating}
+                      user={user}
+                      img={item.thumbnail}
+                    />
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
+        )}
       </div>
     </div>
   );
