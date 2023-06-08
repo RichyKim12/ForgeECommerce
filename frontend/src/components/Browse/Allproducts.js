@@ -83,7 +83,9 @@ export default function Allproducts(props) {
         </Button>
 
         <QuantityPicker
-          width=".7rem"
+          width="1.8rem"
+          color="black"
+
           value={1}
           min={1}
           onChange={getPickerValue}
