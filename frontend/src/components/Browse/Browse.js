@@ -12,21 +12,30 @@ function Browse(user) {
   const [category, setCategory] = useState([]);
 
   const handleSubmit = async () => {
-    fetch(`https://dummyjson.com/products/${text}`)
+    console.log('i am submitting');
+    fetch(`https://dummyjson.com/products/category/${text}`)
       .then((response) => response.json())
       .then((data) => setTriviaData(data.products))
       .catch((error) => console.log("Error: ", error));
   };
 
-  useEffect(() => {
+useEffect(() => {
     console.log(triviaData);
   }, [triviaData]);
+
+  // on mount, load all the products
+  useEffect(() => {
+    fetch("https://dummyjson.com/products")
+      .then((response) => response.json())
+      .then((data) => setTriviaData(data.products))
+      .catch((error) => console.log("Error: ", error));
+  }, [])
 
   return (
     <div
       style={{
         overflow: "auto",
-        height: "inherit",
+        height: "100vh",
         marginBottom: "500px",
       }}
     >
@@ -56,11 +65,14 @@ function Browse(user) {
             id="string"
             placeholder="Search for anything..."
             type="string"
-            valueholder=""
-            onChange={(event) => setText(event.target.value)}
+            value={text}
+            onChange={(event) => {
+              setText(event.target.value);
+              console.log(text);
+            }}
           ></input>
           <div>
-            <button class="fa fa-search" type="submit" onClick={handleSubmit}>
+            <button class="fa fa-search" type="submit" onClick={handleSubmit} style={{margin:'5rem'}}>
               GO!
             </button>
           </div>
