@@ -1,28 +1,33 @@
-import React from "react";
+import React from 'react'
 import "./App.css";
-import CartPage from "./components/Checkout/cartPage";
+import CartPage from './components/Checkout/cartPage';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Browse from "./components/Browse/Browse";
-import NewProduct from "./components/NewProduct/NewProduct";
-import NavigationBar from "./components/Navigation/NavigationBar";
-import Profile from "./components/Profile/Profile";
-import Login from "./components/Login/Login";
+import Browse from './components/Browse/Browse';
+import NewProduct from './components/NewProduct/NewProduct';
+import NavigationBar from './components/Navigation/NavigationBar';
+import Profile from './components/Profile/Profile';
+import Login from './components/Login/Login';
+
 
 function App() {
   return (
-    <div className="App">
+    <div className = "App">
+
       <BrowserRouter>
-        <NavigationBar></NavigationBar>
+      <NavigationBar></NavigationBar>
         <Routes>
           <Route path="/" element={<Browse />} />
           <Route path="/newproduct" element={<NewProduct />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/cart" element={<CartPage />} />
+          <Route path="/cart" element={<CartPage/>} />
         </Routes>
       </BrowserRouter>
+      
+      <footer>  @Copyright 2023   </footer>
+
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

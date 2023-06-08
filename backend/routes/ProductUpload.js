@@ -9,11 +9,12 @@ const upload = multer();
 
 // Upload this to database
 router.post('/', upload.single('image'), (req, res)=> {
-    const {itemName, itemDescription} = req.body
+    const {fileName} = req.body
     const image = req.file
     // // Test Print Statements
-    console.log(image)
-    console.log(itemName, itemDescription)
+    console.log(fileName)
+    // console.log(image)
+    // console.log(itemName, itemDescription)
     
 });
 

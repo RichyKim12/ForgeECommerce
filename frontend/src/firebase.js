@@ -34,3 +34,6 @@ setPersistence(auth, browserLocalPersistence);
 export const db = getFirestore(app);
 const analytics = getAnalytics(app);
 
+export default db;
+
+
