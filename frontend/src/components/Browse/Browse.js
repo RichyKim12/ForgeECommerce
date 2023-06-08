@@ -10,8 +10,10 @@ function Browse(user) {
   const [triviaData, setTriviaData] = useState([]);
   const [text, setText] = useState("");
   const [category, setCategory] = useState([]);
+  const [items, setItems] = useState([]);
 
   const handleSubmit = async () => {
+    console.log("i am submitting");
     console.log("i am submitting");
     fetch(`https://dummyjson.com/products/category/${text}`)
       .then((response) => response.json())
@@ -27,7 +29,6 @@ function Browse(user) {
   };
 
 
-  // on mount, load all the products
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -58,12 +59,26 @@ function Browse(user) {
       }}
     >
       <div className="page">
-        <header>
-          {/* <ListItem disableGutters>
+        <header
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "4rem",
+          }}
+        >
+          <ListItem
+            disableGutters
+            sx={{
+              p: "2px 4px",
+              display: "flex",
+              alignItems: "center",
+              width: 400,
+            }}
+          >
             <TextField
               hiddenLabel
               id="standard-textarea"
-              label="Join the Conversation"
+              label="Find what you need:"
               placeholder="Type here.."
               multiline
               variant="standard"
@@ -77,9 +92,8 @@ function Browse(user) {
             <ListItemButton autoFocus onClick={() => handleSubmit()}>
               <SendIcon />
             </ListItemButton>
-          </ListItem> */}
-          <label for="string">Find anything you need: </label>
-          <input
+          </ListItem>
+          {/* <input
             id="string"
             placeholder="Search for anything..."
             type="string"
@@ -97,7 +111,7 @@ function Browse(user) {
             >
               GO!
             </button>
-          </div>
+          </div> */}
         </header>
 
         <Container maxWidth="lg">
