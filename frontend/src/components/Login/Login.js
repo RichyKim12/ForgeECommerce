@@ -22,7 +22,7 @@ export default function Login() {
   //       // hit backend to create a new user
   //       try {
   //         const response = axios.post(
-  //           "http://localhost:9000/firestore/add-user",
+  //           "https://week3-team4-ecommerce-backend.onrender.com/firestore/add-user",
   //           {
   //             uid: result.user.uid,
   //             email: result.user.email,
@@ -50,7 +50,7 @@ export default function Login() {
       // check if a user exists
       try {
         console.log('user uid is', result.user.uid.toString());
-        const response = await axios.get(`http://localhost:9000/firestore/user-exists/${result.user.uid.toString()}`);
+        const response = await axios.get(`https://week3-team4-ecommerce-backend.onrender.com/firestore/user-exists/${result.user.uid.toString()}`);
         console.log(response);
         if (response.data) { // user exists, returned true
           navigate(RouteLocations.browse);
@@ -64,7 +64,7 @@ export default function Login() {
       // hit backend to create a new user
       try {
         const response = await axios.post(
-          "http://localhost:9000/firestore/add-user",
+          "https://week3-team4-ecommerce-backend.onrender.com/firestore/add-user",
           {
             uid: result.user.uid,
             email: result.user.email,
