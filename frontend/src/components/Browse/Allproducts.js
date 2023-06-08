@@ -6,6 +6,7 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
+import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -16,8 +17,14 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Cart from "./Cart.js";
 import { QuantityPicker } from "react-qty-picker";
 import ListItemButton from "@mui/material/ListItemButton";
-// import { doc, updateDoc } from "@firebase/firestore";
+import Rating from "@mui/material/Rating";
+import Stack from "@mui/material/Stack";
+
+// import { doc, addDoc, collection } from "@firebase/firestore";
 // import db from "../../firebase";
+
+import db from "../../firebase";
+import { collection, addDoc, Timestamp } from "@firebase/firestore";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -32,7 +39,15 @@ const ExpandMore = styled((props) => {
 
 export default function Allproducts(props) {
   const [expanded, setExpanded] = React.useState(false);
-  const [curvalue, setCurvalue] = useState("");
+  const [curvalue, setCurvalue] = useState("1");
+  const [ititle, setItitle] = useState();
+  const [irating, setIrating] = useState();
+  const [ibrand, setIbrand] = useState();
+  const [idescription, setIdescription] = useState();
+  const [iprice, setIprice] = useState();
+  const [iuser, setIuser] = useState();
+  const [iimg, setIimg] = useState();
+
   const getPickerValue = (value) => {
     setCurvalue(value);
   };
@@ -40,6 +55,33 @@ export default function Allproducts(props) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  async function addEventdb() {
+    setItitle(props.title);
+    setIrating(props.rating);
+    setIbrand(props.brand);
+    setIdescription(props.description);
+    setIprice(props.price);
+    setIuser(props.user);
+    setIimg(props.img);
+
+    try {
+      const docRef = await addDoc(collection(db, "cart"), {
+        user: iuser,
+        title: ititle,
+        rating: irating,
+        img: iimg,
+        brand: ibrand,
+        price: iprice,
+        description: idescription,
+        quantity: curvalue,
+      });
+
+      console.log("document ID: ", docRef.id);
+    } catch (error) {
+      console.error("error adding doc: ", error);
+    }
+  }
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -53,23 +95,38 @@ export default function Allproducts(props) {
         <Typography variant="body2" color="text.secondary">
           ${props.price}
         </Typography>
+
         <Typography variant="body2" color="text.secondary">
-          {props.title}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {props.rating}
+          <Rating
+            name="half-rating-read"
+            defaultValue={props.rating}
+            precision={0.1}
+            readOnly
+          />
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        <Button onClick={addEventdb} style={{ background: "white" }}>
           <Cart
             title={props.title}
             rating={props.rating}
             brand={props.brand}
             description={props.description}
             price={props.price}
+            quantity={curvalue}
+            user={props.user}
+            img={props.thumbnail}
           />
-        </IconButton>
+        </Button>
+        {/* <IconButton aria-label="add to favorites">
+         <Cart
+           title={props.title}
+           rating={props.rating}
+           brand={props.brand}
+           description={props.description}
+           price={props.price}
+         />
+       </IconButton> */}
         <QuantityPicker
           width=".7rem"
           value={1}
@@ -89,7 +146,6 @@ export default function Allproducts(props) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Method:</Typography>
           <Typography paragraph>{props.brand}</Typography>
           <Typography paragraph>{props.description}</Typography>
         </CardContent>
