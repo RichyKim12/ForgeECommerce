@@ -55,22 +55,24 @@ function Browse() {
           </button>
         </div>
       </header>
+      <div style={{ height: "88vh", overflow: "auto" }}>
+        <Container maxWidth="lg"  >
+          <Grid container spacing={4} justify="left" style={{ overflow: "auto" }}>
+            {triviaData.map((item, index) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={index} >
+                <Card style={{ height: "100%" }}>
+                  <Allproducts
+                    title={item.title || item.name}
+                    description={item.description}
+                    price={item.price}
+                  />
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </div>
 
-      <Container maxWidth="lg">
-        <Grid container spacing={4} justify="left">
-          {triviaData.map((item, index) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-              <Card style={{ height: "100%" }}>
-                <Allproducts
-                  title={item.title}
-                  description={item.description}
-                  price={item.price}
-                />
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
     </div>
   );
 }
