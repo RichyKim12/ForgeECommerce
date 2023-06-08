@@ -6,26 +6,47 @@ import Browse from './components/Browse/Browse';
 import NewProduct from './components/NewProduct/NewProduct';
 import NavigationBar from './components/Navigation/NavigationBar';
 import Profile from './components/Profile/Profile';
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Login from './components/Login/Login';
 
 
+const themeLight = createTheme({
+  palette: {
+    background: {
+      default: "#FEFAE0"
+    }
+  },
+});
+
+const themeDark = createTheme({
+  palette: {
+    background: {
+      default: "#222222"
+    },
+    text: {
+      primary: "#ffffff"
+    }
+  }
+});
 function App() {
   return (
     <div className = "App">
-
-      <BrowserRouter>
-      <NavigationBar></NavigationBar>
-        <Routes>
-          <Route path="/" element={<Browse />} />
-          <Route path="/newproduct" element={<NewProduct />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/cart" element={<CartPage/>} />
-        </Routes>
-      </BrowserRouter>
+      <ThemeProvider theme={themeLight}>
+        <CssBaseline />
+        <BrowserRouter>
+            <NavigationBar/>
+              <Routes>
+                <Route path="/" element={<Browse />} />
+                <Route path="/newproduct" element={<NewProduct />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/cart" element={<CartPage/>} />
+              </Routes>
+              
+        </BrowserRouter>
+      </ThemeProvider>
       
-      <footer>  @Copyright 2023   </footer>
-
     </div>
   )
 }
