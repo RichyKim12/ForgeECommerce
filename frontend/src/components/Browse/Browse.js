@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Allproducts from "./Allproducts.js";
+import axios from 'axios';
 import {
   Card,
   CardContent,
@@ -21,6 +22,19 @@ function Browse() {
       .catch((error) => console.log("Error: ", error));
   };
 
+
+  const handleSubmit2 = () => {
+    axios.get('http://localhost:9000/firestore/get-all-products')
+      .then((response) => {
+        const productsList = response.data;
+        setTriviaData((prevData) => [...prevData, ...productsList]);
+      })
+      .catch((error) => {
+        console.log('Error:', error);
+      });
+  };
+  console.log("data")
+  console.log(triviaData)
   useEffect(() => {
     console.log(triviaData);
   }, [triviaData]);
@@ -36,7 +50,7 @@ function Browse() {
           onChange={(event) => setText(event.target.value)}
         ></input>
         <div>
-          <button class="fa fa-search" type="submit" onClick={handleSubmit}>
+          <button class="fa fa-search" type="submit" onClick={() => { handleSubmit(); handleSubmit2(); }}>
             GO!
           </button>
         </div>
