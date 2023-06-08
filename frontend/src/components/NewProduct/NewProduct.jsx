@@ -71,7 +71,6 @@ function NewProduct() {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
-        console.log(user.displayName)
       }
       else {
         navigate(RouteLocations.login);
@@ -84,7 +83,6 @@ function NewProduct() {
     return <h1> Redirecting... </h1>;
   }
   const fileSelectHandler=(e)=> {
-    console.log(e.target.files[0])
     setSelectedImage(e.target.files[0])  
   }
 

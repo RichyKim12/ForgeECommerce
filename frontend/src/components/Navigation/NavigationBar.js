@@ -87,7 +87,6 @@ const NavigationBar = () => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
-        console.log(user.displayName)
       }
       else{
         setUser(null)

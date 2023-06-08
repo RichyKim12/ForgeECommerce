@@ -112,7 +112,6 @@ export default function Profile() {
             `https://week3-team4-ecommerce-backend.onrender.com/firestore/get-products-by-creator-uid/${user.uid}`
           )
           .then((response) => {
-            console.log("response", response.data);
             setProducts(response.data);
           })
           .catch((error) => {

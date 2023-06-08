@@ -66,7 +66,6 @@ const CartPage = () => {
 
   const handleCheckout = async () => {
     try {
-      console.log("cart items are", cartItems);
       const response = await axios.post(
         "https://week3-team4-ecommerce-backend.onrender.com/payment/create-checkout-session",
         {
@@ -102,14 +101,12 @@ const CartPage = () => {
       //     // Payment successful, proceed with order completion
       // }
     } catch (error) {
-      console.log("hi");
       console.log(error.message);
       // Handle error
     }
   };
 
   const handleDeleteInitial = (e) => {
-    console.log(e);
     setDeleteItemName(e);
   };
 
@@ -117,7 +114,6 @@ const CartPage = () => {
     const filteredArray = cartItems.filter(
       (item) => item.title !== deleteItemName
     );
-    console.log(filteredArray);
     Cookies.set("cart", JSON.stringify(filteredArray));
     window.location.reload();
   };

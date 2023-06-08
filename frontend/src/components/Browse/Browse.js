@@ -67,7 +67,6 @@ function Browse(user) {
           "https://week3-team4-ecommerce-backend.onrender.com/firestore/get-all-products"
         );
         const firestoreData = await firestoreResponse.json();
-        console.log("firestore data", firestoreData);
         // Update the state with the combined data
         setTriviaData((prevState) => [...prevState, ...firestoreData]);
 
@@ -77,8 +76,6 @@ function Browse(user) {
       }
     }
 
-    console.log("i am submitting");
-    console.log("i am submitting");
     fetch(`https://dummyjson.com/products/category/${newProductCategory}`)
       .then((response) => response.json())
       .then((data) => setTriviaData(data.products))
@@ -88,7 +85,6 @@ function Browse(user) {
       `https://week3-team4-ecommerce-backend.onrender.com/firestore/get-products-by-category/${newProductCategory}`
     );
     const firestoreData = await firestoreResponse.json();
-    console.log("firestore data for category", text, "is", firestoreData);
     // Update the state with the combined data
     setTriviaData((prevState) => [...prevState, ...firestoreData]);
   };
@@ -104,7 +100,6 @@ function Browse(user) {
           "https://week3-team4-ecommerce-backend.onrender.com/firestore/get-all-products"
         );
         const firestoreData = await firestoreResponse.json();
-        console.log("firestore data", firestoreData);
         // Update the state with the combined data
         setTriviaData((prevState) => [...prevState, ...firestoreData]);
       } catch (error) {
