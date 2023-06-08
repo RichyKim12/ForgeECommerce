@@ -56,9 +56,8 @@ function Cart(props) {
   }
   return (
     <div>
-      <Button variant="" onClick={handleClickOpen}>
-        <AddShoppingCartIcon />{" "}
-      </Button>
+        <AddShoppingCartIcon onClick={handleClickOpen}/>
+        {" "}
       <Dialog
         open={open}
         onClose={handleClose}
