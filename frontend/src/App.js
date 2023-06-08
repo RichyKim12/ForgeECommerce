@@ -20,8 +20,8 @@ const themeLight = createTheme({
   palette: {
     background: {
       default: "#FEFAE0"
-    },
-    
+      
+    }
   },
 });
 
@@ -40,10 +40,10 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/cart" element={<CartPage/>} />
               </Routes>
-              
+
         </BrowserRouter>
       </ThemeProvider>
-      
+
     </div>
   )
 }

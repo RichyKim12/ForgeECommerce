@@ -58,6 +58,9 @@ export default function Allproducts(props) {
         <Typography variant="body2" color="text.secondary">
           ${props.price}
         </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {props.title ? props.title : props.name}
+        </Typography>
 
         <Typography variant="body2" color="text.secondary">
           <Rating
