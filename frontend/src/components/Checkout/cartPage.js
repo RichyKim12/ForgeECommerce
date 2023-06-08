@@ -28,7 +28,6 @@ const theme = createTheme({
         darker: "#053e85",
       },
     },
-  },
 });
 
 const deleteTheme = createTheme({
@@ -142,7 +141,12 @@ const CartPage = () => {
               <h1> Remove from cart? </h1>
             </DialogContent>
             <DialogActions>
-              <ThemeProvider theme={theme}>
+                <ThemeProvider theme ={theme}>
+                    <Button size = "large" variant = "contained" onClick = {() => setConfirmationPopup(false)}>
+                        Cancel
+                    </Button>
+                </ThemeProvider>
+              <ThemeProvider theme={deleteTheme}>
                 <Button
                   variant="contained"
                   onClick={() => {
@@ -200,14 +204,16 @@ const CartPage = () => {
         Total Price: ${calculateTotalPrice()}
       </Typography>
       {/* <CardElement options={{ style: { base: { fontSize: '16px' } } }} /> */}
-      <Button
-        variant="contained"
-        color="primary"
-        style={{ marginTop: "16px" }}
-        onClick={handleCheckout}
-      >
-        Checkout
-      </Button>
+      <ThemeProvider theme={theme}>
+        <Button
+            variant="contained"
+            color="primary"
+            style={{ marginTop: "16px" }}
+            onClick={handleCheckout}
+        >
+            Checkout
+        </Button>
+      </ThemeProvider>
     </Container>
   );
 };
