@@ -10,26 +10,45 @@ function Browse(user) {
   const [triviaData, setTriviaData] = useState([]);
   const [text, setText] = useState("");
   const [category, setCategory] = useState([]);
+  const [items, setItems] = useState([]);
 
   const handleSubmit = async () => {
-    console.log('i am submitting');
+    console.log("i am submitting");
+    console.log("i am submitting");
     fetch(`https://dummyjson.com/products/category/${text}`)
       .then((response) => response.json())
       .then((data) => setTriviaData(data.products))
       .catch((error) => console.log("Error: ", error));
+    // fetch data from firestore for that category
+    const firestoreResponse = await fetch(`http://localhost:9000/firestore/get-products-by-category/${text}`);
+    const firestoreData = await firestoreResponse.json();
+  console.log('firestore data for category', text, "is",  firestoreData);
+    // Update the state with the combined data
+    setTriviaData(prevState => [...prevState, ...firestoreData]);
+
   };
 
-useEffect(() => {
-    console.log(triviaData);
-  }, [triviaData]);
 
-  // on mount, load all the products
   useEffect(() => {
-    fetch("https://dummyjson.com/products")
-      .then((response) => response.json())
-      .then((data) => setTriviaData(data.products))
-      .catch((error) => console.log("Error: ", error));
-  }, [])
+    const fetchData = async () => {
+      try {
+        const dummyResponse = await fetch("https://dummyjson.com/products");
+        const dummyData = await dummyResponse.json();
+        setTriviaData(dummyData.products);
+  
+        const firestoreResponse = await fetch("http://localhost:9000/firestore/get-all-products");
+        const firestoreData = await firestoreResponse.json();
+        console.log('firestore data', firestoreData);
+        // Update the state with the combined data
+        setTriviaData(prevState => [...prevState, ...firestoreData]);
+      } catch (error) {
+        console.log("Error:", error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+  
 
   return (
     <div
@@ -40,12 +59,26 @@ useEffect(() => {
       }}
     >
       <div className="page">
-        <header>
-          {/* <ListItem disableGutters>
+        <header
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "4rem",
+          }}
+        >
+          <ListItem
+            disableGutters
+            sx={{
+              p: "2px 4px",
+              display: "flex",
+              alignItems: "center",
+              width: 400,
+            }}
+          >
             <TextField
               hiddenLabel
               id="standard-textarea"
-              label="Join the Conversation"
+              label="Find what you need:"
               placeholder="Type here.."
               multiline
               variant="standard"
@@ -59,23 +92,26 @@ useEffect(() => {
             <ListItemButton autoFocus onClick={() => handleSubmit()}>
               <SendIcon />
             </ListItemButton>
-          </ListItem> */}
-          <label for="string">Find anything you need: </label>
-          <input
+          </ListItem>
+          {/* <input
             id="string"
             placeholder="Search for anything..."
             type="string"
             value={text}
             onChange={(event) => {
               setText(event.target.value);
-              console.log(text);
             }}
           ></input>
           <div>
-            <button class="fa fa-search" type="submit" onClick={handleSubmit} style={{margin:'5rem'}}>
+            <button
+              class="fa fa-search"
+              type="submit"
+              onClick={handleSubmit}
+              style={{ margin: "5rem" }}
+            >
               GO!
             </button>
-          </div>
+          </div> */}
         </header>
 
         <Container maxWidth="lg">
@@ -84,13 +120,13 @@ useEffect(() => {
               <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
                 <Card style={{ height: "100%" }}>
                   <Allproducts
-                    title={item.title}
+                    title={item.title ? item.title : item.name}
                     description={item.description}
                     price={item.price}
                     brand={item.brand}
                     rating={item.rating}
                     user={user}
-                    img={item.thumbnail}
+                    img={item.thumbnail ? item.thumbnail : item.image_url}
                   />
                 </Card>
               </Grid>
