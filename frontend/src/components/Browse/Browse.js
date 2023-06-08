@@ -90,4 +90,3 @@ function Browse(user) {
   );
 }
 export default Browse;
-

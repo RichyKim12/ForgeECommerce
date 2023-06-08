@@ -26,6 +26,7 @@ const {
   addDoc,
   updateDoc,
   deleteDoc,
+  doc
 } = require("firebase/firestore");
 
 router.get("/", function (req, res, next) {
@@ -92,7 +93,7 @@ router.post("/add-product", upload.single('file'), async function (req, res, nex
         // gets the image from the form data
         const image = req.file;
         // gets the rest of the data from the form data
-        const {name, description, price, creator_uid, fileName, category} = req.body;
+        const {name, description, price, creator_uid, fileName} = req.body;
         // creates upload params
         const uploadParams = {
             Bucket: "forge-swe2023-week3-ecommerce-bucket",
@@ -116,9 +117,7 @@ router.post("/add-product", upload.single('file'), async function (req, res, nex
             description: description,
             price: price,
             creator_uid: creator_uid,
-            image_url: "https://forge-swe2023-week3-ecommerce-bucket.s3.us-east-2.amazonaws.com/product-images/" + fileName,
-            category: category
-
+            image_url: "https://forge-swe2023-week3-ecommerce-bucket.s3.us-east-2.amazonaws.com/product-images/" + fileName
         });
         res.send("Product added with ID: " + newProductRef.id);
 
@@ -194,22 +193,29 @@ router.delete("/delete-product-by-id/:id", async function (req, res, next) {
 // DELETE request to delete a product by name
 router.delete("/delete-product-by-name/:name", async function (req, res, next) {
     try {
-        const productsRef = collection(db, "products");
-        const productsSnapshot = await getDocs(productsRef);
-        const productsList = productsSnapshot.docs.map((doc) => {
-            return {
-                id: doc.id,
-                ...doc.data(),
-            };
-        });
-        const product = productsList.find((product) => product.name === req.params.name);
-        const productRef = doc(db, "products", product.id);
-        await deleteDoc(productRef);
-        res.send("Product deleted");
+      console.log(req.params.name);
+      const productsRef = collection(db, "products");
+      const productsSnapshot = await getDocs(productsRef);
+      const productsList = productsSnapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+      const product = productsList.find((product) => product.name === req.params.name);
+      console.log(product);
+      // delete the document
+      try {
+        await deleteDoc(doc(db, "products", product.id));
+      } catch(e) {
+        console.log("Error deleting document", e);
+      }
+      res.send("Product deleted");
     } catch (error) {
-        res.status(500).send("Error deleting product");
+      res.status(500).send("Error deleting product");
     }
-});
+  });
+  
 
 // GET request to get all users
 router.get("/get-all-users", async function (req, res, next) {
