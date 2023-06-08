@@ -88,7 +88,7 @@ export default function Allproducts(props) {
       <CardMedia
         component="img"
         height="194"
-        image="/static/images/cards/paella.jpg"
+        image={props.img}
         alt={props.title}
       />
       <CardContent>
@@ -106,6 +106,7 @@ export default function Allproducts(props) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
+        {/* Add to cart button */}
         <Button onClick={addEventdb} style={{ background: "white" }}>
           <Cart
             title={props.title}

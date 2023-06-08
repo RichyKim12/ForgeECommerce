@@ -78,7 +78,7 @@ function Browse(user) {
                     brand={item.brand}
                     rating={item.rating}
                     user={user}
-                    img={item.img}
+                    img={item.thumbnail}
                   />
                 </Card>
               </Grid>
