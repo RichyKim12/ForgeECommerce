@@ -20,6 +20,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
 
+import Cookies from 'js-cookie';
+
 // import { doc, addDoc, collection } from "@firebase/firestore";
 // import db from "../../firebase";
 
@@ -56,31 +58,60 @@ export default function Allproducts(props) {
     setExpanded(!expanded);
   };
 
+  const addToCart = () =>{
+    // Cookies.remove("cart")
+    let cart = Cookies.get("cart")
+    if (!cart){  //Empty cart
+      if (ititle){
+        const item = [{title:ititle, rating:irating, brand:ibrand, description:idescription,
+                      price:iprice, image:iimg, quantity:curvalue}]
+        Cookies.set("cart", JSON.stringify(item))
+        // print for test
+        cart = Cookies.get("cart")
+        let parsedArray = JSON.parse(cart)
+        console.log(parsedArray)
+      }
+    }
+    else{ // Non-empty cart
+      if (ititle){
+        const item = {title:ititle, rating:irating, brand:ibrand, description:idescription,
+          price:iprice, image:iimg, quantity:curvalue}
+        let parsedArray = JSON.parse(cart)
+        parsedArray.push(item)
+        Cookies.set("cart", JSON.stringify(parsedArray))
+        // print for tests
+        cart = Cookies.get("cart")
+        parsedArray = JSON.parse(cart)
+        console.log(parsedArray)
+      }
+    }
+  }
+
+  // This will store cart items within local storage
   async function addEventdb() {
     setItitle(props.title);
     setIrating(props.rating);
     setIbrand(props.brand);
     setIdescription(props.description);
     setIprice(props.price);
-    setIuser(props.user);
     setIimg(props.img);
+    addToCart()
+    // try {
+    //   const docRef = await addDoc(collection(db, "cart"), {
+    //     user: iuser,
+    //     title: ititle,
+    //     rating: irating,
+    //     img: iimg,
+    //     brand: ibrand,
+    //     price: iprice,
+    //     description: idescription,
+    //     quantity: curvalue,
+    //   });
 
-    try {
-      const docRef = await addDoc(collection(db, "cart"), {
-        user: iuser,
-        title: ititle,
-        rating: irating,
-        img: iimg,
-        brand: ibrand,
-        price: iprice,
-        description: idescription,
-        quantity: curvalue,
-      });
-
-      console.log("document ID: ", docRef.id);
-    } catch (error) {
-      console.error("error adding doc: ", error);
-    }
+    //   console.log("document ID: ", docRef.id);
+    // } catch (error) {
+    //   console.error("error adding doc: ", error);
+    // }
   }
 
   return (
