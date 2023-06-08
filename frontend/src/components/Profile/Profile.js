@@ -29,7 +29,27 @@ import {
 import LogoutIcon from "@mui/icons-material/Logout";
 // components
 import ProfileProductCard from "./ProfileProductCard";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#606C38",
+      darker: "#053e85",
+    },
+  },
+});
+
+const deleteTheme = createTheme({
+  palette: {
+      primary: {
+        main: "#800000",
+        darker: "#053e85",
+      },
+     
+    },
+})
 export default function Profile() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -260,10 +280,14 @@ export default function Profile() {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setOpenNewProductModal(false)}>
-              Cancel
-            </Button>
-            <Button onClick={() => handleAddNewProduct()}>Add</Button>
+            <ThemeProvider theme = {theme}>
+              <Button variant="contained" onClick={() => setOpenNewProductModal(false)}>
+                Cancel
+              </Button>
+            </ThemeProvider>
+            <ThemeProvider theme = {deleteTheme}>
+              <Button variant="contained" onClick={() => handleAddNewProduct()}>Add</Button>
+            </ThemeProvider>
           </DialogActions>
         </Dialog>
 

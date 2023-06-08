@@ -12,10 +12,16 @@ import Login from './components/Login/Login';
 
 
 const themeLight = createTheme({
+
+
+  status: {
+    danger: "#e53e3e",
+  },
   palette: {
     background: {
       default: "#FEFAE0"
-    }
+    },
+    
   },
 });
 

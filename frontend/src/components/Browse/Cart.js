@@ -10,6 +10,28 @@ import db from "../../firebase";
 import { collection, addDoc } from "@firebase/firestore";
 import CardMedia from "@mui/material/CardMedia";
 import Cookies from 'js-cookie'
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#606C38",
+      darker: "#053e85",
+    },
+  },
+});
+
+const deleteTheme = createTheme({
+  palette: {
+      primary: {
+        main: "#800000",
+        darker: "#053e85",
+      },
+     
+    },
+})
+
 function Cart(props) {
   const [open, setOpen] = React.useState(false);
 
@@ -27,7 +49,7 @@ function Cart(props) {
 
     if (!cart){  //Empty cart
       if (props.title){
-        const item = [{title:props.title, rating:props.rating, brand:props.brand, description:props.description,
+        const item = [{name:props.title, rating:props.rating, brand:props.brand, description:props.description,
                       price:props.price, image:props.img, quantity:props.quantity}]
         Cookies.set("cart", JSON.stringify(item))
         // print for test
@@ -38,7 +60,7 @@ function Cart(props) {
     }
     else{ // Non-empty cart
       if (props.title){
-        const item = {title:props.title, rating:props.rating, brand:props.brand, description:props.description,
+        const item = {name:props.title, rating:props.rating, brand:props.brand, description:props.description,
           price:props.price, image:props.img, quantity:props.quantity}
         let parsedArray = JSON.parse(cart)
         parsedArray.push(item)
@@ -85,10 +107,14 @@ function Cart(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} autoFocus>
-            Cancel
-          </Button>
-          <Button onClick={addEventdb}>Confirm</Button>
+          <ThemeProvider theme={theme}>
+            <Button variant="contained" onClick={handleClose} autoFocus>
+              Cancel
+            </Button>
+          </ThemeProvider>
+          <ThemeProvider theme={deleteTheme}>
+           <Button variant="contained" onClick={addEventdb}>Confirm</Button>
+          </ThemeProvider>
         </DialogActions>
       </Dialog>
     </div>

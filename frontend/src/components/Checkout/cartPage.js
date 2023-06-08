@@ -11,20 +11,24 @@ import { styled } from "@mui/system";
 
 
 const theme = createTheme({
-    status: {
-      danger: "#e53e3e",
-    },
     palette: {
       primary: {
         main: "#606C38",
         darker: "#053e85",
       },
-      neutral: {
-        main: "#64748B",
-        contrastText: "#fff",
-      },
     },
   });
+
+const deleteTheme = createTheme({
+    palette: {
+        primary: {
+          main: "#800000",
+          darker: "#053e85",
+        },
+       
+      },
+})
+
 
 const CartPage = () => {
     // const stripe = useStripe();
@@ -51,7 +55,7 @@ const CartPage = () => {
     
     const handleCheckout = async () => {
         try {
-            const response = await axios.post('http://localhost:9000/payment/create-checkout-session', {
+            const response = await axios.post('https://week3-team4-ecommerce-backend.onrender.com/payment/create-checkout-session', {
                 cartItems: cartItems,
                 totalAmount: calculateTotalPrice(),
                 
@@ -127,15 +131,20 @@ const CartPage = () => {
                         </DialogContent>
                         <DialogActions>
                             <ThemeProvider theme={theme}>
+                            <Button variant="contained" onClick={()=>setConfirmationPopup(false)}>
+                                Close
+                            </Button>
+                            </ThemeProvider>
+                            <ThemeProvider theme={deleteTheme}>
                             <Button variant="contained" 
                                     onClick={() => {handleDeleteFinal();
                                                     setConfirmationPopup(false);
                                                     }}
-                                    size = "large"
                                     > 
                                     Remove
                             </Button>
                             </ThemeProvider>
+                            
                         </DialogActions>
                     </Dialog>
                     <Grid item xs={12} sm={3}>
@@ -172,9 +181,11 @@ const CartPage = () => {
                 Total Price: ${calculateTotalPrice()}
             </Typography>
             {/* <CardElement options={{ style: { base: { fontSize: '16px' } } }} /> */}
-            <Button variant="contained" color="primary" style={{ marginTop: '16px' }} onClick={handleCheckout}>
-                Checkout
-            </Button>
+            <ThemeProvider theme={theme}>
+                <Button variant="contained"  style={{ marginTop: '16px' }} onClick={handleCheckout}>
+                    Checkout
+                </Button>
+            </ThemeProvider>
         </Container>
     );
 };
