@@ -102,7 +102,6 @@ function Browse(user) {
 
     <div
       style={{
-        overflow: "auto",
         height: "100vh",
         marginBottom: "500px",
       }}
@@ -148,7 +147,6 @@ function Browse(user) {
           <Grid container spacing={4} justify="left">
             {triviaData.map((item, index) => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-                <Card style={{ height: "100%" }}>
                   <Allproducts
                     title={item.title ? item.title : item.name}
                     description={item.description}
@@ -158,7 +156,6 @@ function Browse(user) {
                     user={user}
                     img={item.thumbnail ? item.thumbnail : item.image_url}
                   />
-                </Card>
               </Grid>
             ))}
           </Grid>
