@@ -1,3 +1,6 @@
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+
 import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
@@ -38,14 +41,20 @@ export default function Allproducts(props) {
   const [expanded, setExpanded] = React.useState(false);
   const [curvalue, setCurvalue] = useState("1");
 
-  const getPickerValue = (value) => {
-    setCurvalue(value);
-  };
-
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  const [count, setCount] = useState(1);
+  const IncNum = () => {
+    setCount(count + 1);
+  };
+  const DecNum = () => {
+    if (count > 0) setCount(count - 1);
+    else {
+      setCount(0);
+    }
+  };
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
@@ -79,21 +88,61 @@ export default function Allproducts(props) {
             brand={props.brand}
             description={props.description}
             price={props.price}
-            quantity={curvalue}
+            quantity={count}
             user={props.user}
             img={props.img}
           />
         </Button>
+        <Button>
+          <div
+            className="main_div"
+            style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+              height: "50%",
+            }}
+          >
+            <div
+              className="center_div"
+              style={{
+                width: "25%",
+                borderRadius: "5%",
+                display: "flex",
 
-        <QuantityPicker
-          width="1.8rem"
-          color="black"
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div
+                className="btn_div"
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "space-around",
+                  alignItems: "center",
+                }}
+              >
+                <Button onClick={DecNum}>
+                  <Avatar>
+                    <RemoveIcon />
+                  </Avatar>
+                </Button>
+                <h2>{count}</h2>
 
-          value={1}
-          min={1}
-          onChange={getPickerValue}
-        />
-        {/* </ExpandMore> */}
+                <Button onClick={IncNum}>
+                  <Avatar>
+                    <AddIcon />
+                  </Avatar>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </Button>
 
         <ExpandMore
           expand={expanded}
