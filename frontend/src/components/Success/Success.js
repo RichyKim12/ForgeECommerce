@@ -13,6 +13,9 @@ export default function Success() {
         <p className="success-container-text">
           Your order has been placed and will be delivered shortly.
         </p>
+        <p className="success-container-text">
+          If you would like to cancel your order please contact XXX-XXX-XXXX
+        </p>
         <p
           className="success-container-text"
           onClick={() => {
