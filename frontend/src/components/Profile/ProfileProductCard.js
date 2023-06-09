@@ -31,7 +31,6 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Cart from '../Browse/Cart';
-import { QuantityPicker } from "react-qty-picker";
 import ListItemButton from "@mui/material/ListItemButton";
 // axios
 import axios from "axios";
