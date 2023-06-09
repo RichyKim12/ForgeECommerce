@@ -18,7 +18,6 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Cart from "./Cart.js";
-import { QuantityPicker } from "react-qty-picker";
 import ListItemButton from "@mui/material/ListItemButton";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
