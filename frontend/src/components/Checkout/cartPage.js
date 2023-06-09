@@ -112,7 +112,7 @@ const CartPage = () => {
 
   const handleDeleteFinal = () => {
     const filteredArray = cartItems.filter(
-      (item) => item.title !== deleteItemName
+      (item) => item.name !== deleteItemName
     );
     Cookies.set("cart", JSON.stringify(filteredArray));
     window.location.reload();
@@ -165,11 +165,12 @@ const CartPage = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="body1" style={{ fontWeight: "bold" }}>
-              {item.title}
+              {item.name}
             </Typography>
             <Typography variant="body1" style={{ fontWeight: "bold" }}>
               Quantity: {item.quantity}
             </Typography>
+
           </Grid>
           <Grid item xs={12} sm={3}>
             <Typography variant="body1">
@@ -187,7 +188,7 @@ const CartPage = () => {
               }
               onClick={() => {
                 setConfirmationPopup(true);
-                handleDeleteInitial(item.title);
+                handleDeleteInitial(item.name);
               }}
             />
           </Grid>
